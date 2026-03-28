@@ -1,0 +1,55 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-white border-t border-gray-200 mt-16">
+  <div class="max-w-5xl mx-auto px-4 py-10">
+    <div class="flex flex-col md:flex-row justify-between items-start gap-8">
+      {/* Logo & description */}
+      <div class="flex-1">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-7 h-7 rounded-md flex items-center justify-center text-white" style="background-color: #204070;">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+          <span class="font-bold text-sm" style="color: #204070;">AIと暮らす。</span>
+        </div>
+        <p class="text-xs text-gray-500 leading-relaxed max-w-sm">
+          非エンジニアがClaude Code × Astro × Cloudflareで爆速ブログを作る実運用ドキュメンタリー。
+        </p>
+      </div>
+
+      {/* Links */}
+      <div class="flex gap-12 text-xs">
+        <div>
+          <p class="font-bold text-gray-800 mb-2">カテゴリ</p>
+          <ul class="space-y-1.5 text-gray-500">
+            <li><a href="/category/setup/" class="hover:text-[#204070] transition">はじめ方</a></li>
+            <li><a href="/category/build/" class="hover:text-[#204070] transition">つくる</a></li>
+            <li><a href="/category/ops/" class="hover:text-[#204070] transition">運用</a></li>
+            <li><a href="/category/claude/" class="hover:text-[#204070] transition">Claude Code</a></li>
+            <li><a href="/category/story/" class="hover:text-[#204070] transition">体験記</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="font-bold text-gray-800 mb-2">姉妹サイト</p>
+          <ul class="space-y-1.5 text-gray-500">
+            <li><a href="https://sauna-to-kurasu.com/" target="_blank" rel="noopener noreferrer" class="hover:text-[#204070] transition">サウナと暮らす。</a></li>
+          </ul>
+          <p class="font-bold text-gray-800 mb-2 mt-4">その他</p>
+          <ul class="space-y-1.5 text-gray-500">
+            <li><a href="/profile/" class="hover:text-[#204070] transition">プロフィール</a></li>
+            <li><a href="/privacy/" class="hover:text-[#204070] transition">プライバシーポリシー</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-100 mt-8 pt-6 text-center text-xs text-gray-400">
+      &copy; {currentYear} AIと暮らす。 All rights reserved.
+    </div>
+  </div>
+</footer>

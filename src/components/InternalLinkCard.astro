@@ -1,0 +1,113 @@
+---
+import { getImage } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  slug: string;
+  headerText?: string;
+  imagePosition?: string;
+}
+
+const { slug, headerText = '詳しくはこちら', imagePosition } = Astro.props;
+
+// コンテンツコレクションから記事を取得
+const allPosts = await getCollection('blog');
+const post = allPosts.find((p) => p.id === slug);
+
+if (!post) {
+  throw new Error(`InternalLinkCard: 記事が見つかりません (slug: "${slug}")`);
+}
+
+const { title, category, heroImage } = post.data;
+
+// heroImage を最適化済みURLに変換
+let imageUrl = '';
+if (heroImage) {
+  const optimized = await getImage({ src: heroImage, width: 480 });
+  imageUrl = optimized.src;
+}
+---
+
+<div class="internal-link-card">
+  <a href={`/blog/${slug}/`} class="internal-link-box">
+    <div class="internal-link-lead">
+      <svg class="internal-link-lead-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+      <span class="internal-link-lead-text">{headerText}</span>
+    </div>
+    <div class="internal-link-main">
+      <div class="internal-link-image-wrapper">
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={title}
+            class="internal-link-img"
+            style={imagePosition ? `object-position: ${imagePosition} !important;` : ''}
+            loading="lazy"
+          />
+        ) : (
+          <div class="internal-link-image-placeholder">
+            <span>No Image</span>
+          </div>
+        )}
+        {category && <span class="internal-link-category">{category}</span>}
+      </div>
+      <div class="internal-link-content">
+        <h4 class="internal-link-title">{title}</h4>
+      </div>
+      <div class="internal-link-arrow">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+    </div>
+  </a>
+</div>
+
+<style>
+  .internal-link-image-wrapper {
+    position: relative;
+    width: 200px;
+    min-width: 200px;
+    align-self: stretch;
+    overflow: hidden;
+  }
+
+  .internal-link-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+
+  .internal-link-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    font-size: 14px;
+  }
+
+  .internal-link-category {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(32, 64, 112, 0.85);
+    color: white;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 767px) {
+    .internal-link-image-wrapper {
+      width: 130px;
+      min-width: 130px;
+    }
+  }
+</style>

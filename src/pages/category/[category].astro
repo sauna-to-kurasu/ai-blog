@@ -1,0 +1,71 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { category: 'setup' } },
+    { params: { category: 'build' } },
+    { params: { category: 'ops' } },
+    { params: { category: 'claude' } },
+    { params: { category: 'story' } },
+  ];
+}
+
+const categoryMap: Record<string, string> = {
+  setup: 'はじめ方',
+  build: 'つくる',
+  ops: '運用',
+  claude: 'Claude Code',
+  story: '体験記',
+};
+
+const { category } = Astro.params;
+const categoryName = categoryMap[category!] || category;
+
+const posts = (await getCollection('blog'))
+  .filter((post) => post.data.category === categoryName)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout title={`${categoryName} | AIと暮らす。`} description={`「${categoryName}」カテゴリの記事一覧`}>
+  <div class="max-w-5xl mx-auto px-4 py-10">
+    <div class="mb-8">
+      <a href="/" class="text-xs text-gray-500 hover:text-[#204070]">&larr; ホームに戻る</a>
+      <h1 class="text-2xl font-bold mt-3" style="color: #204070;">{categoryName}</h1>
+    </div>
+
+    {posts.length === 0 ? (
+      <div class="bg-white rounded-xl p-10 text-center border border-gray-200">
+        <p class="text-gray-500">このカテゴリの記事を準備中です。</p>
+      </div>
+    ) : (
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {posts.map((post) => (
+          <a href={`/blog/${post.id}/`} class="group bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all">
+            {post.data.heroImage && (
+              <div class="aspect-video overflow-hidden">
+                <img
+                  src={post.data.heroImage.src}
+                  alt={post.data.title}
+                  class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+                />
+              </div>
+            )}
+            <div class="p-5">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs text-gray-400">
+                  <FormattedDate date={post.data.pubDate} />
+                </span>
+              </div>
+              <h3 class="text-[15px] font-bold text-gray-800 leading-relaxed group-hover:text-[#204070] transition-colors">
+                {post.data.title}
+              </h3>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</Layout>

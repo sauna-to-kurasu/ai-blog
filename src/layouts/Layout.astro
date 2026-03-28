@@ -1,0 +1,26 @@
+---
+import SharedHeader from '../components/SharedHeader.astro';
+import SharedFooter from '../components/SharedFooter.astro';
+import BaseHead from '../components/BaseHead.astro';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = 'AIと暮らす。' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+	<body class="font-sans antialiased" style="background: #F5F7F9;">
+		<SharedHeader />
+		<main>
+			<slot />
+		</main>
+		<SharedFooter />
+	</body>
+</html>

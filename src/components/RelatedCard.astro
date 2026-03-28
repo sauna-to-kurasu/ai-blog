@@ -1,0 +1,47 @@
+---
+import { getImage } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  slug: string;
+  title?: string;
+  date?: string;
+}
+
+const { slug, title: fallbackTitle, date: fallbackDate } = Astro.props;
+
+const allPosts = await getCollection('blog');
+const post = allPosts.find((p) => p.id === slug);
+
+const title = post?.data.title ?? fallbackTitle ?? slug;
+const heroImage = post?.data.heroImage;
+const pubDate = post?.data.pubDate;
+const category = post?.data.category;
+
+let imageUrl = '';
+if (heroImage) {
+  const optimized = await getImage({ src: heroImage, width: 480 });
+  imageUrl = optimized.src;
+}
+
+const formattedDate = pubDate
+  ? new Date(pubDate).toLocaleDateString('sv-SE').replace(/-/g, '.')
+  : fallbackDate ?? '';
+---
+
+<div class="related-card">
+  <a href={`/blog/${slug}/`}>
+    <div class="related-card-image">
+      {imageUrl ? (
+        <img src={imageUrl} alt={title} loading="lazy" />
+      ) : (
+        <div style="width:100%;height:100%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;color:#9ca3af;">No Image</div>
+      )}
+      {category && <span class="related-card-category">{category}</span>}
+    </div>
+    <div class="related-card-content">
+      <h3 class="related-card-title">{title}</h3>
+      <p class="related-card-date">{formattedDate}</p>
+    </div>
+  </a>
+</div>
