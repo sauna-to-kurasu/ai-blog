@@ -18,7 +18,7 @@ const navItems = [
 <header class="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50">
   <div class="max-w-5xl mx-auto px-4 h-16 flex justify-between items-center">
     <a href="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity group">
-      <div class="w-9 h-9 rounded-lg flex items-center justify-center text-white shadow-md transition-transform group-hover:scale-105" style="background-color: #204070;">
+      <div class="w-9 h-9 rounded-lg flex items-center justify-center text-white shadow-md transition-transform group-hover:scale-105" style="background-color: #1F6B5E;">
         <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
           <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
           <path d="M2 17l10 5 10-5"></path>
@@ -26,7 +26,7 @@ const navItems = [
         </svg>
       </div>
       <div class="flex flex-col">
-        <TitleTag class="font-bold text-lg leading-none tracking-tight m-0" style="color: #204070;">
+        <TitleTag class="font-bold text-lg leading-none tracking-tight m-0" style="color: #1F6B5E;">
           AIと暮らす。
         </TitleTag>
         <span class="text-[10px] text-gray-400 tracking-wider">LIVING WITH AI</span>
@@ -36,14 +36,14 @@ const navItems = [
     {/* Desktop nav */}
     <nav class="hidden md:flex items-center gap-6 text-sm font-bold">
       {navItems.map((item) => (
-        <a href={item.href} class="text-gray-600 hover:text-[#204070] transition">{item.label}</a>
+        <a href={item.href} class="text-gray-600 hover:text-[#1F6B5E] transition">{item.label}</a>
       ))}
     </nav>
 
     {/* Mobile hamburger */}
     <button
       id="mobile-menu-btn"
-      class="md:hidden p-2 text-gray-600 hover:text-[#204070] transition"
+      class="md:hidden p-2 text-gray-600 hover:text-[#1F6B5E] transition"
       aria-label="メニューを開く"
     >
       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -57,7 +57,7 @@ const navItems = [
     <div class="absolute inset-0 bg-black/50" id="mobile-menu-overlay"></div>
     <div class="absolute top-0 right-0 h-full w-72 bg-white shadow-xl transform translate-x-full transition-transform duration-300" id="mobile-menu-panel">
       <div class="flex items-center justify-between p-4 border-b border-gray-100">
-        <span class="font-bold text-sm" style="color: #204070;">メニュー</span>
+        <span class="font-bold text-sm" style="color: #1F6B5E;">メニュー</span>
         <button id="mobile-menu-close" class="p-2 text-gray-400 hover:text-gray-600" aria-label="メニューを閉じる">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -66,12 +66,12 @@ const navItems = [
       </div>
       <nav class="p-4 space-y-1">
         {navItems.map((item) => (
-          <a href={item.href} class="block px-4 py-3 text-sm text-gray-700 hover:bg-[#eff6ff] hover:text-[#204070] rounded-lg transition">
+          <a href={item.href} class="block px-4 py-3 text-sm text-gray-700 hover:bg-[#EEF6F4] hover:text-[#1F6B5E] rounded-lg transition">
             {item.label}
           </a>
         ))}
         <div class="border-t border-gray-100 mt-4 pt-4">
-          <a href="/profile/" class="block px-4 py-3 text-sm text-gray-700 hover:bg-[#eff6ff] hover:text-[#204070] rounded-lg transition">
+          <a href="/profile/" class="block px-4 py-3 text-sm text-gray-700 hover:bg-[#EEF6F4] hover:text-[#1F6B5E] rounded-lg transition">
             プロフィール
           </a>
         </div>

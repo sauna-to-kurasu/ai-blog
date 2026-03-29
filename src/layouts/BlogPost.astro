@@ -26,7 +26,7 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
     <BaseHead title={title} description={description} image={heroImage} />
   </head>
 
-  <body class="min-h-screen font-sans text-slate-700 font-normal" style="background-color: #F5F7F9; font-family: 'Noto Sans JP', sans-serif;">
+  <body class="min-h-screen font-sans text-slate-700 font-normal" style="background-color: #F4F8F7; font-family: 'Noto Sans JP', sans-serif;">
 
     <!-- Article Schema.org -->
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -56,11 +56,11 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
 
     <!-- BREADCRUMB -->
     <div class="max-w-5xl mx-auto px-4 py-4 text-xs text-gray-500 overflow-x-auto whitespace-nowrap">
-      <a href="/" class="text-gray-500 hover:text-[#204070] hover:underline">ホーム</a>
+      <a href="/" class="text-gray-500 hover:text-[#1F6B5E] hover:underline">ホーム</a>
       <span class="mx-2 text-gray-300">&gt;</span>
       {category && categorySlug && (
         <>
-          <a href={`/category/${categorySlug}/`} class="text-gray-500 hover:text-[#204070] hover:underline">{category}</a>
+          <a href={`/category/${categorySlug}/`} class="text-gray-500 hover:text-[#1F6B5E] hover:underline">{category}</a>
           <span class="mx-2 text-gray-300">&gt;</span>
         </>
       )}
@@ -89,7 +89,7 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
             <div class="absolute inset-0 bg-gradient-to-b from-black/20 to-black/50"></div>
             {category && (
               <div class="absolute top-4 left-4 z-10">
-                <span class="inline-block px-3 py-1 rounded text-xs font-bold text-white shadow-sm" style="background-color: #3A6090;">
+                <span class="inline-block px-3 py-1 rounded text-xs font-bold text-white shadow-sm" style="background-color: #2A7D6E;">
                   {category}
                 </span>
               </div>
@@ -136,7 +136,7 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
 <style is:global>
   /* ヒーロー画像がないときのグラデーションバナー */
   .hero-gradient {
-    background: linear-gradient(135deg, #1a3255 0%, #204070 30%, #3A6090 60%, #5a8ab5 100%);
+    background: linear-gradient(135deg, #145045 0%, #1F6B5E 30%, #2A7D6E 60%, #5CB8A8 100%);
   }
 
   /* Article body typography */
@@ -157,7 +157,7 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
     margin-top: 3rem;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 2px solid #204070;
+    border-bottom: 2px solid #1F6B5E;
     color: #1f2937;
   }
   @media (min-width: 768px) {
@@ -172,7 +172,7 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
     margin-top: 2rem;
     margin-bottom: 0.75rem;
     padding-left: 0.75rem;
-    border-left: 3px solid #204070;
+    border-left: 3px solid #1F6B5E;
     color: #1f2937;
   }
 
@@ -181,13 +181,13 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
   }
 
   .article-body a {
-    color: #204070;
+    color: #1F6B5E;
     text-decoration: underline;
-    text-decoration-color: rgba(32, 64, 112, 0.3);
+    text-decoration-color: rgba(31, 107, 94, 0.3);
     text-underline-offset: 3px;
   }
   .article-body a:hover {
-    color: #3A6090;
+    color: #2A7D6E;
   }
 
   .article-body img {
@@ -225,8 +225,8 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
     font-size: 0.875em;
   }
   .article-body :not(pre) > code {
-    background: #f1f5f9;
-    color: #204070;
+    background: #EEF6F4;
+    color: #1F6B5E;
     padding: 0.15em 0.4em;
     border-radius: 0.25rem;
     font-size: 0.85em;
@@ -240,27 +240,27 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
     font-size: 14px;
   }
   .article-body th {
-    background: #F0F4F8;
-    color: #204070;
+    background: #EEF6F4;
+    color: #1F6B5E;
     font-weight: 700;
     padding: 0.75rem;
     text-align: left;
-    border-bottom: 2px solid #dce3ed;
+    border-bottom: 2px solid #C8DDD9;
   }
   .article-body td {
     padding: 0.75rem;
     border-bottom: 1px solid #f0f1f3;
   }
   .article-body tr:nth-child(even) {
-    background: #fafbfc;
+    background: #F5FAF9;
   }
 
   /* Blockquote */
   .article-body blockquote {
-    border-left: 3px solid #204070;
+    border-left: 3px solid #1F6B5E;
     padding: 1rem 1.25rem;
     margin: 1.5rem 0;
-    background: #F0F4F8;
+    background: #EEF6F4;
     border-radius: 0 0.5rem 0.5rem 0;
     color: #333;
   }
@@ -277,8 +277,8 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
 
   /* Info highlight box */
   .info-highlight-box {
-    background: #F0F4F8;
-    border-left: 4px solid #204070;
+    background: #EEF6F4;
+    border-left: 4px solid #1F6B5E;
     border-radius: 0 0.75rem 0.75rem 0;
     padding: 1.25rem;
     margin: 1.5rem 0;
@@ -294,7 +294,7 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
      ハイライトボックス（highlight-box）
      ======================================== */
   .article-body .highlight-box {
-    background-color: #f9fafb;
+    background-color: #F5FAF9;
     border: 1px solid #e5e7eb;
     border-radius: 0.75rem;
     padding: 1rem 1.5rem;
@@ -339,13 +339,13 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
      ======================================== */
   .article-body .summary-box {
     margin: 2rem 0;
-    border: 2px solid #204070;
+    border: 2px solid #1F6B5E;
     border-radius: 1rem;
     overflow: hidden;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
   .article-body .summary-box-header {
-    background: linear-gradient(135deg, #204070 0%, #3A6090 100%);
+    background: linear-gradient(135deg, #1F6B5E 0%, #2A7D6E 100%);
     padding: 0.875rem 1.25rem;
     display: flex;
     align-items: center;
@@ -401,7 +401,7 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
     top: 0.25rem;
     width: 1.25rem;
     height: 1.25rem;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23204070' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231F6B5E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
     background-size: contain;
     background-repeat: no-repeat;
   }
@@ -447,7 +447,7 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
   .article-body .merit-card-amount {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #204070;
+    color: #1F6B5E;
     margin-bottom: 0.25rem;
   }
   @media (min-width: 768px) {
@@ -461,8 +461,8 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
     margin: 0;
   }
   .article-body .merit-card.merit-card-total {
-    background-color: #F0F4F8;
-    border: 2px solid #204070;
+    background-color: #EEF6F4;
+    border: 2px solid #1F6B5E;
   }
 
   /* ========================================
@@ -500,7 +500,7 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
     flex-shrink: 0;
     width: 32px;
     height: 32px;
-    background: #204070;
+    background: #1F6B5E;
     color: white;
     border-radius: 50%;
     display: flex;
@@ -516,7 +516,7 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
     min-width: 0;
     background: #ffffff;
     border: 1px solid #e5e7eb;
-    border-left: 3px solid #204070;
+    border-left: 3px solid #1F6B5E;
     border-radius: 0 0.75rem 0.75rem 0;
     padding: 0.875rem 1rem;
   }
@@ -565,7 +565,7 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
   .article-body .toc-section {
     padding: 1rem 1rem;
     margin-bottom: 3rem;
-    background-color: #f9fafb;
+    background-color: #F5FAF9;
     border-radius: 0.75rem;
   }
   @media (min-width: 768px) {
@@ -577,7 +577,7 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
     display: block;
     font-size: 1rem;
     font-weight: 700;
-    color: #204070;
+    color: #1F6B5E;
     margin-bottom: 0.75rem;
   }
   @media (min-width: 768px) {
@@ -612,7 +612,7 @@ const categorySlug = category ? categorySlugMap[category] || 'other' : null;
     text-decoration: none;
   }
   .article-body .toc-section ol li a:hover {
-    color: #3A6090;
+    color: #2A7D6E;
     text-decoration: underline;
   }
 
