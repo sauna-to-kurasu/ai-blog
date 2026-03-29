@@ -1,0 +1,323 @@
+---
+title: "スマホからブログを更新する。Tailscale + Termius + Claude Codeのモバイル開発環境"
+description: "外出先のスマホからMacBookに接続し、Claude Codeでブログを更新する環境を30分で構築。Tailscale + Termiusの設定手順と、ハマりポイントを全記録。"
+pubDate: 2026-03-29
+category: "運用"
+---
+
+## 結論：スマホ1台で、外出先からブログを更新できる
+
+外出先でブログのネタを思いついたとき、「帰ったらやろう」と思って忘れる。僕はこれを何度も繰り返していました。
+
+今はスマホからClaude Codeを操作して、その場で記事を書いて公開しています。構築にかかった時間は約30分。追加コストは0円です。
+
+<div class="merit-cards merit-cards-3col">
+  <div class="merit-card">
+    <div class="merit-card-label">構築時間</div>
+    <div class="merit-card-amount">約30分</div>
+    <p class="merit-card-note">初回セットアップのみ</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">追加コスト</div>
+    <div class="merit-card-amount">0円</div>
+    <p class="merit-card-note">すべて無料ツール</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">必要ステップ</div>
+    <div class="merit-card-amount">5ステップ</div>
+    <p class="merit-card-note">この記事の手順通りでOK</p>
+  </div>
+</div>
+
+この記事では、僕が実際に使っているモバイル開発環境の構築手順を、5ステップで解説します。
+
+<div class="toc-section">
+  <strong>この記事の内容</strong>
+  <ol>
+    <li><a href="#完成イメージ">完成イメージ</a></li>
+    <li><a href="#step-1-tailscaleで自宅macに安全につなぐ">Tailscaleで自宅Macに安全につなぐ</a></li>
+    <li><a href="#step-2-termiusでスマホからターミナル操作">Termiusでスマホからターミナル操作</a></li>
+    <li><a href="#step-3-claude-codeの認証を通す">Claude Codeの認証を通す</a></li>
+    <li><a href="#step-4-githubの認証を通す">GitHubの認証を通す</a></li>
+    <li><a href="#step-5-スマホからローカルプレビューを見る">スマホからローカルプレビューを見る</a></li>
+    <li><a href="#折りたたみスマホならさらに快適">折りたたみスマホなら、さらに快適</a></li>
+    <li><a href="#僕がハマったポイント3つ">僕がハマったポイント3つ</a></li>
+  </ol>
+</div>
+
+## 完成イメージ
+
+通信の流れはこうなります。
+
+```
+スマホ（Termius）
+  ↓ Tailscale VPN（暗号化通信）
+自宅 MacBook Air
+  ↓
+Claude Code → git push → Cloudflare Pages に自動デプロイ
+```
+
+ポイントは、自宅のMacBookにスマホから安全にリモート接続して、MacBook上のClaude Codeを操作するという構成です。スマホ自体でコードを書くわけではありません。
+
+<div class="highlight-box">
+  <ul>
+    <li><strong>Tailscale</strong> — スマホとMacを安全につなぐVPN（無料）</li>
+    <li><strong>Termius</strong> — スマホ用SSHクライアント（無料）</li>
+    <li><strong>Amphetamine</strong> — Macのスリープを防止（無料）</li>
+    <li><strong>Claude Code</strong> — Mac側にインストール済み（Proプラン月額$17）</li>
+    <li><strong>GitHubアカウント</strong> — コードのバージョン管理とデプロイに必要</li>
+  </ul>
+</div>
+
+すべて無料枠で動きます。Claude Codeの月額は別途かかりますが、モバイル環境のための追加費用はゼロです。
+
+## Step 1: Tailscaleで自宅Macに安全につなぐ
+
+Tailscaleは、面倒なVPN設定なしでデバイス同士を安全につなげるサービスです。ルーターのポート開放も不要。
+
+<div class="process-timeline">
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">1</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">MacBook側のセットアップ</div>
+      <p class="process-timeline-desc">tailscale.com でアカウント作成 → Mac用アプリをインストール → ログインすると 100.x.x.x のIPアドレスが割り当てられる</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">2</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">スマホ側のセットアップ</div>
+      <p class="process-timeline-desc">App Store / Google Play から Tailscale をインストール → 同じアカウントでログイン</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">3</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">接続確認</div>
+      <p class="process-timeline-desc">管理画面でMacBookが「Connected」になっていればOK。MacのIPは tailscale ip コマンドで確認</p>
+    </div>
+  </div>
+</div>
+
+MacのTailscale IPは、ターミナルで以下のコマンドで確認できます。
+
+```bash
+tailscale ip
+# 例: 100.104.124.88
+```
+
+このIPアドレスは後のステップで何度も使うので、メモしておいてください。
+
+## Step 2: Termiusでスマホからターミナル操作
+
+Termiusは、スマホからSSH接続できるターミナルアプリです。
+
+<div class="process-timeline">
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">1</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">ホスト情報の登録</div>
+      <p class="process-timeline-desc">Termiusを開き「New Host」→ Hostname にTailscaleのMac IPアドレス（例: 100.104.124.88）、Username にMacのユーザー名を入力</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">2</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">接続テスト</div>
+      <p class="process-timeline-desc">Macのログインパスワードで認証 → Macのターミナルが表示されれば成功</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">3</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">エイリアス設定（おすすめ）</div>
+      <p class="process-timeline-desc">Macの ~/.zshrc に alias blog='cd ~/Desktop/ai-blog && claude' を追加。以降 blog と打つだけでClaude Code起動</p>
+    </div>
+  </div>
+</div>
+
+エイリアスの設定方法はこちらです。
+
+```bash
+# ~/.zshrc に追加
+alias blog='cd ~/Desktop/ai-blog && claude'
+```
+
+以降、Termiusから `blog` と打つだけで、プロジェクトフォルダへの移動とClaude Codeの起動が同時に完了します。
+
+## Step 3: Claude Codeの認証を通す
+
+SSH経由でClaude Codeを初めて使うとき、認証が必要です。
+
+<div class="process-timeline">
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">1</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">Claude Codeを起動</div>
+      <p class="process-timeline-desc">Termiusから claude コマンドを実行</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">2</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">/login を実行</div>
+      <p class="process-timeline-desc">認証用のURLとコードが表示される</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">3</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">スマホのブラウザで認証</div>
+      <p class="process-timeline-desc">表示されたURLをスマホのブラウザで開き、コードを入力。Termiusに戻ると「Claude Max」として認証完了</p>
+    </div>
+  </div>
+</div>
+
+<div class="info-highlight-box">
+  <p><strong>注意:</strong> SSH経由だとMac側のブラウザは使えません。スマホのブラウザで認証する必要があります。</p>
+</div>
+
+## Step 4: GitHubの認証を通す
+
+Claude Codeからコミット・プッシュするには、GitHub CLIの認証も必要です。SSH経由ではブラウザ認証が使えないため、**Personal Access Token（PAT）方式**で設定します。
+
+### PATの作成
+
+<div class="process-timeline">
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">1</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">GitHubでトークンを生成</div>
+      <p class="process-timeline-desc">スマホのブラウザで github.com/settings/tokens にアクセス →「Generate new token (classic)」を選択</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">2</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">スコープを設定</div>
+      <p class="process-timeline-desc"><strong>repo</strong> と <strong>read:org</strong> にチェック。この2つがないとClaude Codeからの操作でエラーが出ます</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">3</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">Termiusで認証を実行</div>
+      <p class="process-timeline-desc">gh auth login → HTTPS → Paste an authentication token → コピーしたPATを貼り付け</p>
+    </div>
+  </div>
+</div>
+
+Termiusで実行するコマンドは以下です。
+
+```bash
+gh auth login -h github.com
+```
+
+選択肢が表示されたら：
+
+- プロトコル → **HTTPS**
+- 認証方法 → **Paste an authentication token**
+- コピーしたPATを貼り付け
+
+```
+✓ Logged in as your-username
+```
+
+が表示されれば完了。Claude Codeからのコミット・プッシュが通るようになります。
+
+## Step 5: スマホからローカルプレビューを見る
+
+Claude Codeで記事を書いたら、公開前にプレビューで確認したいですよね。
+
+通常の `pnpm dev` だと `localhost:4321` で起動しますが、これはMac自身からしかアクセスできません。スマホから見るには、`--host` オプションを付けます。
+
+```bash
+pnpm dev --host 0.0.0.0
+```
+
+そしてスマホのブラウザで、`localhost` の代わりにTailscaleのIPを指定します。
+
+```
+http://100.104.124.88:4321
+```
+
+これでスマホからリアルタイムでプレビューを確認できます。実機でのレスポンシブ表示チェックにも使えるので一石二鳥です。
+
+## 折りたたみスマホなら、さらに快適
+
+僕はSamsung Galaxy Z Fold7を使っています。折りたたみスマホの大画面と**2画面分割**が、モバイル開発では圧倒的に効きます。
+
+| 左画面 | 右画面 |
+|--------|--------|
+| Termius（Claude Code） | Googleメモ（音声入力用） |
+
+### なぜ2画面が必要なのか
+
+SSHターミナル（Termius）では、スマホの日本語IMEや音声入力がうまく動きません。予測変換が暴走したり、入力がチャタリング（同じ文字が連続入力される現象）したりします。
+
+そこで**右画面のGoogleメモで音声入力 → テキストをコピー → 左画面のTermiusに貼り付け**、というワークフローで回避しています。
+
+<div class="info-highlight-box">
+  <p>通常のスマホでも同じことは可能ですが、アプリを毎回切り替える必要があります。Z Fold7なら2画面を並べたまま作業できるので、ストレスがほぼありません。</p>
+</div>
+
+折りたたみスマホじゃなくても使えます。ただ、モバイル開発を本気でやるなら、折りたたみ端末の体験は別次元だということは伝えておきたいです。
+
+## 僕がハマったポイント3つ
+
+### 1. MacBookがスリープしてTailscaleが切れる
+
+MacBookの画面を閉じると、電源アダプタを接続していてもWi-Fiが切断されることがあります。
+
+<div class="highlight-box">
+  <ul>
+    <li><strong>対策①</strong>: Amphetamine（無料アプリ）でスリープを防止</li>
+    <li><strong>対策②</strong>: それでも切れる場合は、ターミナルで <code>sudo pmset -c disablesleep 1</code> を実行</li>
+  </ul>
+</div>
+
+これでクラムシェルモード（画面を閉じた状態）でもスリープしなくなります。
+
+### 2. Termiusで日本語入力ができない
+
+前述の通り、SSHターミナルではスマホの日本語IMEがまともに動きません。
+
+<div class="highlight-box">
+  <ul>
+    <li><strong>対策</strong>: メモアプリで入力 → コピー → Termiusに貼り付け</li>
+    <li>Claude Codeへの指示は日本語で送ることが多いので、この運用は必須です</li>
+  </ul>
+</div>
+
+### 3. GitHub認証エラーが連鎖する
+
+SSH経由だとブラウザ認証が開けないため、`gh auth login` で「フリーズ」する場合があります。また、PATのスコープが足りないと `missing required scope 'read:org'` というエラーが出ます。
+
+<div class="highlight-box">
+  <ul>
+    <li><strong>対策</strong>: Step 4で紹介したPAT方式を最初から使うこと</li>
+    <li>スコープは <strong>repo</strong> と <strong>read:org</strong> の両方を忘れずに付ける</li>
+    <li>ブラウザ認証（<code>-w</code> オプション）はSSH経由では使わない</li>
+  </ul>
+</div>
+
+## まとめ
+
+<div class="summary-box">
+  <div class="summary-box-header">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span>この記事のポイント</span>
+  </div>
+  <div class="summary-box-content">
+    <ul>
+      <li>Tailscale + Termius + Claude Code の3ツールで、スマホからブログ更新環境が作れる</li>
+      <li>構築時間は約30分、追加コストは0円（すべて無料ツール）</li>
+      <li>GitHub認証はPAT方式を最初から使えばトラブルを回避できる</li>
+      <li>折りたたみスマホ（Z Fold7等）の2画面分割で、さらに快適に作業できる</li>
+    </ul>
+  </div>
+</div>
+
+Tailscale + Termius + Claude Code。この3つを組み合わせるだけで、外出先からスマホでブログを更新できる環境が手に入ります。
+
+電車の中、カフェ、旅行先。場所を選ばず「思いついたら即更新」ができるようになったのは、僕のブログ運用を大きく変えてくれました。
