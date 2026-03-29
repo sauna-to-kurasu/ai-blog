@@ -29,6 +29,13 @@
 	--color-bg: #F4F8F7;
 	--color-text: #333333;
 
+	/* Dark theme colors (header, hero, article header) */
+	--color-dark: #0F172A;
+	--color-dark-surface: #1E293B;
+	--color-cyan: #22D3EE;
+	--color-cyan-hover: #06B6D4;
+	--color-cyan-soft: #ECFEFF;
+
 	/* Border radius */
 	--radius: 1rem;
 }

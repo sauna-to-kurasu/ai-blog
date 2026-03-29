@@ -1,0 +1,119 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title = 'Terminal' } = Astro.props;
+---
+
+<div class="terminal-block">
+  <div class="terminal-header">
+    <div class="terminal-dots">
+      <span class="terminal-dot terminal-dot--red"></span>
+      <span class="terminal-dot terminal-dot--yellow"></span>
+      <span class="terminal-dot terminal-dot--green"></span>
+    </div>
+    <span class="terminal-title">{title}</span>
+  </div>
+  <div class="terminal-body">
+    <slot />
+  </div>
+</div>
+
+<style is:global>
+  .article-body .terminal-block {
+    background: var(--color-dark, #0F172A);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .article-body .terminal-header {
+    background: var(--color-dark-surface, #1E293B);
+    padding: 0.625rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .article-body .terminal-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .article-body .terminal-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: block;
+  }
+
+  .article-body .terminal-dot--red {
+    background: #EF4444;
+  }
+
+  .article-body .terminal-dot--yellow {
+    background: #EAB308;
+  }
+
+  .article-body .terminal-dot--green {
+    background: #22C55E;
+  }
+
+  .article-body .terminal-title {
+    color: #94A3B8;
+    font-size: 0.75rem;
+    font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+  }
+
+  .article-body .terminal-body {
+    padding: 1rem 1.25rem;
+    color: #E2E8F0;
+    font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+
+  .article-body .terminal-body p {
+    margin-bottom: 0.25rem;
+    color: #E2E8F0;
+  }
+  .article-body .terminal-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* $ prompt styling */
+  .article-body .terminal-prompt {
+    color: #E2E8F0;
+  }
+  .article-body .terminal-prompt::before {
+    content: '$ ';
+    color: var(--color-cyan, #22D3EE);
+  }
+
+  .article-body .terminal-output {
+    color: #94A3B8;
+  }
+
+  .article-body .terminal-highlight {
+    color: var(--color-cyan, #22D3EE);
+  }
+
+  /* Override default pre/code styles inside terminal */
+  .article-body .terminal-block pre {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    font-size: 13px;
+  }
+
+  .article-body .terminal-block code {
+    font-size: inherit;
+    background: transparent;
+    padding: 0;
+    color: inherit;
+  }
+</style>
