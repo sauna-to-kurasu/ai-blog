@@ -13,7 +13,7 @@
 ## 姉妹サイト
 - **サウナと暮らす。**: https://sauna-to-kurasu.com/（同じ人が運営するサウナブログ）
 - リポジトリ: `~/Desktop/sauna-blog`（完全に別リポジトリ）
-- **記事デザインCSS共通化**: サウナブログが「マスター」、AIブログが「フォロワー」。構造・レイアウトCSSは共通で自動反映。カラーは各サイト固有のパレットに変換して反映される（変換マッピングはサウナブログのCLAUDE.mdに記載）
+- **記事デザインCSS共通化**: `src/styles/article-body-shared.css` がサウナブログと同一ファイル（サウナブログがマスター）。共通コンポーネント（highlight-box, summary-box, merit-cards, process-timeline 等）の構造CSSを共有。全カラーはCSS変数で吸収されるため、カラー変換は不要。AIブログ固有のスタイルは `src/styles/article-body-ai.css` に記述
 
 ## Tech Stack
 - **パッケージマネージャ**: pnpm（npm は使用しない）
