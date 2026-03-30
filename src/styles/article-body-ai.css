@@ -1,0 +1,38 @@
+/* ================================================================
+   article-body-ai.css
+   AIブログ固有の記事スタイル
+
+   共通スタイルは article-body-shared.css から継承。
+   このファイルにはAIブログだけで使うスタイル・上書きを記述する。
+   ================================================================ */
+
+@import "./article-body-shared.css";
+
+/* ── AI blog overrides ── */
+
+/* インラインコードをシアンテーマに */
+.article-body :not(pre) > code {
+  background: var(--color-brand-bg);
+  color: var(--color-brand);
+  padding: 0.15em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.85em;
+}
+
+/* コードブロックのフォント */
+.article-body code {
+  font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+  font-size: 0.875em;
+}
+
+/* コードブ��ックの行間 */
+.article-body pre {
+  line-height: 1.7;
+  font-size: 14px;
+  border-radius: 0.75rem;
+}
+
+/* ヒーロー画像なしのグラデーションバナー */
+.hero-gradient {
+  background: linear-gradient(135deg, #0C4A6E 0%, #0E7490 30%, #06B6D4 60%, #22D3EE 100%);
+}
