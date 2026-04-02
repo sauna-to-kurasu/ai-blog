@@ -1,0 +1,252 @@
+---
+title: "Claude Codeの始め方。最初のサイトが動くまでの全手順"
+description: "プログラミング経験ゼロでもOK。Claude Codeのインストールから最初のWebサイトが表示されるまでを、30分で完了する全手順を解説。"
+pubDate: 2026-04-02
+category: "はじめ方"
+---
+
+import AiChat from '../../components/AiChat.astro';
+import InternalLinkCard from '../../components/InternalLinkCard.astro';
+
+## 結論：Claude Codeがあれば、30分でWebサイトが動く
+
+「プログラミングができないと、Webサイトは作れない」
+
+僕もそう思っていました。でも実際にやってみたら、Claude Codeに日本語で話しかけるだけで、30分後にはブラウザに自分のサイトが表示されていました。
+
+<div class="merit-cards merit-cards-3col">
+  <div class="merit-card">
+    <div class="merit-card-label">所要時間</div>
+    <div class="merit-card-amount">約30分</div>
+    <p class="merit-card-note">インストールから表示まで</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">書いたコード</div>
+    <div class="merit-card-amount">0行</div>
+    <p class="merit-card-note">すべてClaude Codeが生成</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">必要なスキル</div>
+    <div class="merit-card-amount">日本語だけ</div>
+    <p class="merit-card-note">「こういうサイトが欲しい」と伝えるだけ</p>
+  </div>
+</div>
+
+この記事では、Claude Codeのインストールからサイトが動くまでの全手順を、実際に僕がやった通りに紹介します。
+
+<div class="toc-section">
+  <strong>この記事の内容</strong>
+  <ol>
+    <li><a href="#必要なもの">必要なもの</a></li>
+    <li><a href="#step-1claude-codeをインストールする">Step 1: Claude Codeをインストールする</a></li>
+    <li><a href="#step-2プロジェクトを作ってclaude-codeを起動する">Step 2: プロジェクトを作ってClaude Codeを起動する</a></li>
+    <li><a href="#step-3トップページを作ってと伝える">Step 3:「トップページを作って」と伝える</a></li>
+    <li><a href="#step-4ブラウザで確認する">Step 4: ブラウザで確認する</a></li>
+    <li><a href="#僕がハマったポイント">僕がハマったポイント</a></li>
+  </ol>
+</div>
+
+## 必要なもの
+
+始める前に、以下の3つを用意してください。
+
+<div class="highlight-box">
+  <ul>
+    <li><strong>パソコン</strong>: Mac または Windows（この記事ではMacで解説）</li>
+    <li><strong>Claudeのアカウント</strong>: claude.ai でサブスクリプション登録が必要</li>
+    <li><strong>ターミナル</strong>: Macなら最初から入っている「ターミナル」アプリでOK</li>
+  </ul>
+</div>
+
+### 料金プランについて
+
+Claude Codeを使うには、Claudeの有料プランが必要です。
+
+| プラン | 月額 | Claude Codeの使用感 |
+|--------|------|-------------------|
+| Pro | $20 | 使えるが、サイト構築中に上限に達しやすい |
+| Max | $100 | 上限を気にせず作業できる |
+
+正直に言うと、僕はProプラン（$20/月）で始めて、**3日で上限に達しました**。サイトの構築中は何度もClaude Codeとやり取りするので、$20だとすぐ足りなくなります。
+
+結局Maxプラン（$100/月）に上げたのですが、今思えば最初からMaxにしておけばよかったです。月$100は高く感じるかもしれませんが、WordPressのサーバー代（月1,000円〜）+ 有料テーマ（1〜2万円）+ 設定に費やす時間を考えると、**コスパは圧倒的にMaxの方が上**でした。
+
+<div class="info-highlight-box">
+  <p><strong>おすすめ</strong>: まずProプラン（$20/月）で試してみて、足りなければMaxに上げる。ただし、本格的にサイトを作るならMaxを推奨します。</p>
+</div>
+
+## Step 1：Claude Codeをインストールする
+
+Claude Codeは、ターミナル（黒い画面）で動くツールです。インストールはコマンド1行で終わります。
+
+<div class="process-timeline">
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">1</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">ターミナルを開く</div>
+      <p class="process-timeline-desc">Macの場合、Spotlight（⌘ + スペース）で「ターミナル」と入力して起動</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">2</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">インストールコマンドを実行</div>
+      <p class="process-timeline-desc">以下のコマンドをコピーしてターミナルに貼り付け、Enterキーを押す</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">3</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">認証する</div>
+      <p class="process-timeline-desc">ブラウザが開くので、Claudeのアカウントでログインすれば完了</p>
+    </div>
+  </div>
+</div>
+
+インストールコマンドはこちらです。
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+インストールが終わったら、`claude` と入力してEnterを押します。初回はブラウザが開いて認証画面が表示されるので、Claudeのアカウントでログインしてください。
+
+```bash
+claude
+```
+
+<div class="info-highlight-box">
+  <p><strong>「npm: command not found」と表示された場合</strong>: Node.jsがインストールされていません。<a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">Node.js公式サイト</a>からLTS版をダウンロードしてインストールしてください。インストーラーの指示に従うだけで完了します（約5分）。</p>
+</div>
+
+<div class="info-highlight-box">
+  <p><strong>注意</strong>: Claude Codeのインストール手順や画面は頻繁にアップデートされます。うまくいかない場合は<a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener noreferrer">公式ドキュメント</a>を確認してください。</p>
+</div>
+
+## Step 2：プロジェクトを作ってClaude Codeを起動する
+
+次に、サイトのファイルを入れるフォルダ（プロジェクト）を作ります。
+
+```bash
+mkdir my-blog
+cd my-blog
+claude
+```
+
+`mkdir` はフォルダを作るコマンド、`cd` はそのフォルダに移動するコマンドです。覚えなくて大丈夫です。この3行をコピペするだけでOK。
+
+Claude Codeが起動したら、いよいよAIとの対話が始まります。
+
+<AiChat messages={[
+  { role: 'human', text: 'ブログサイトを作りたい。Astroで初期化して、pnpmをパッケージマネージャーにしてほしい' },
+  { role: 'ai', text: '<p>ブログサイトを作成しますね。Astroで初期化してpnpmを使うように設定します。</p><p>まず、Astroプロジェクトを作成します...</p>' }
+]} />
+
+Claude Codeが自動でAstro（サイトを作るためのフレームワーク）のセットアップを進めてくれます。途中で「ファイルを作成していいですか？」と確認されるので、許可してください。
+
+セットアップには2〜3分かかります。完了すると、プロジェクトの基本ファイルが自動で生成されます。
+
+## Step 3：「トップページを作って」と伝える
+
+ここからが一番楽しいパートです。Claude Codeに、どんなサイトにしたいかを日本語で伝えるだけ。
+
+<AiChat messages={[
+  { role: 'human', text: 'トップページを作ってほしい。シンプルなデザインで、ブログのタイトルは「僕のブログ」。自己紹介と最新記事一覧を表示したい' },
+  { role: 'ai', text: '<p>トップページを作成しますね。以下の内容で実装します。</p><p>・ヘッダーにブログタイトル「僕のブログ」<br>・自己紹介セクション<br>・最新記事一覧セクション</p><p>ファイルを作成・編集してもいいですか？</p>' },
+  { role: 'human', text: 'お願いします' },
+  { role: 'ai', text: '<p>完了しました。トップページ、レイアウト、スタイルファイルを作成しました。<code>pnpm dev</code> でローカルサーバーを起動して確認できます。</p>' }
+]} />
+
+ポイントは、**完璧な指示を出す必要がないこと**です。
+
+「シンプルなデザインで」「自己紹介を入れて」くらいのざっくりした指示で、Claude Codeがコードを書いてくれます。出来上がりを見て「もう少し色を変えて」「文字を大きくして」と追加で伝えれば、その場で修正してくれます。
+
+プログラミングの知識は一切不要。「こういうページが欲しい」を言葉にできれば、それだけで十分です。
+
+## Step 4：ブラウザで確認する
+
+Claude Codeが作ってくれたサイトを、自分のパソコンで確認してみましょう。
+
+```bash
+pnpm dev
+```
+
+このコマンドを実行すると、ローカルサーバーが起動します。ブラウザで以下のURLを開いてください。
+
+```
+http://localhost:4321
+```
+
+**ここで、自分のサイトが表示されます。**
+
+初めてブラウザに自分のサイトが映った瞬間は、正直かなり感動しました。コードを1行も書いていないのに、ちゃんとしたWebサイトが動いている。「これ、本当に僕が作ったの？」という気持ちでした。
+
+もし表示がイメージと違っても、Claude Codeに「ここをこう変えて」と伝えるだけで修正できます。何度でもやり直せるので、気軽に試してみてください。
+
+## 僕がハマったポイント
+
+実際にやってみると、いくつかつまずくポイントがありました。同じところでハマらないように、解決策をまとめておきます。
+
+### 1. 「npm: command not found」が出る
+
+Node.jsがインストールされていないときに出るエラーです。
+
+<div class="highlight-box">
+  <ul>
+    <li><strong>対策</strong>: <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">Node.js公式サイト</a>からLTS版をダウンロード・インストール</li>
+    <li>インストール後、ターミナルを一度閉じて開き直すのを忘れずに</li>
+  </ul>
+</div>
+
+### 2. 「permission denied」が出る
+
+Macでグローバルインストールしようとすると、権限エラーが出ることがあります。
+
+<div class="highlight-box">
+  <ul>
+    <li><strong>対策</strong>: コマンドの先頭に <code>sudo</code> を付けて再実行</li>
+    <li><code>sudo npm install -g @anthropic-ai/claude-code</code></li>
+    <li>パスワードを聞かれたら、Macのログインパスワードを入力（入力中は画面に何も表示されませんが、正常です）</li>
+  </ul>
+</div>
+
+### 3. Claude Codeの返答が途中で止まる
+
+長い処理の途中でClaude Codeが止まったように見えることがあります。
+
+<div class="highlight-box">
+  <ul>
+    <li><strong>対策①</strong>: しばらく待ってみる（大きなファイルの生成中は時間がかかる場合があります）</li>
+    <li><strong>対策②</strong>: Enterキーを押してみる</li>
+    <li><strong>対策③</strong>: それでも動かない場合は <code>Ctrl + C</code> で中断し、<code>claude</code> で再起動</li>
+  </ul>
+</div>
+
+## まとめ
+
+<div class="summary-box">
+  <div class="summary-box-header">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span>この記事のポイント</span>
+  </div>
+  <div class="summary-box-content">
+    <ul>
+      <li>Claude Codeのインストールから最初のサイト表示まで、約30分で完了する</li>
+      <li>必要なのはMac（またはWindows）とClaudeの有料アカウントだけ</li>
+      <li>料金はProプラン$20/月から始められるが、本格的に使うならMax $100/月がおすすめ</li>
+      <li>プログラミングの知識は不要。日本語で「こういうサイトが欲しい」と伝えるだけ</li>
+    </ul>
+  </div>
+</div>
+
+この記事で紹介したのは「サイトをローカル（自分のパソコン上）で動かす」ところまでです。
+
+実際にインターネットに公開するには、もう少しステップがあります。Cloudflare Pagesを使えば、ホスティング費用0円で公開できます（公開手順は今後の記事で紹介予定です）。
+
+また、Claude Codeにもっと的確な指示を出すための設定ファイル「CLAUDE.md」の書き方も、今後の記事で詳しく解説していきます。
+
+まずは、ぜひ自分のサイトが動く感動を体験してみてください。
+
+### このブログもClaude Codeで作りました
+
+<InternalLinkCard slug="story-zero-code-blog" headerText="体験記を読む" />
