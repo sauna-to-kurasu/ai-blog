@@ -38,6 +38,11 @@ const buildDate = new Date().toISOString();
 export default defineConfig({
 	site: 'https://ai-to-kurasu.dev',
 	trailingSlash: 'always',
+	markdown: {
+		shikiConfig: {
+			theme: 'github-dark',
+		},
+	},
 	adapter: cloudflare({
 		platformProxy: { enabled: true },
 		imageService: 'passthrough',
