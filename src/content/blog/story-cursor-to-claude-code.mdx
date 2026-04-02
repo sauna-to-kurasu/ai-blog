@@ -1,0 +1,293 @@
+---
+title: "CursorからClaude Codeに乗り換えた非エンジニアの話。月$40が$20になった"
+description: "Claude Pro + Cursorに月$40払っていた非エンジニアが、Claude Code一本に乗り換えるまでの体験記。使用上限・課金の落とし穴・ワークフローの変化を正直に記録します。"
+pubDate: 2026-04-03
+category: "体験記"
+---
+
+import InternalLinkCard from '../../components/InternalLinkCard.astro';
+
+## 結論：非エンジニアなら、Claude Code一本でいい
+
+最初に言い切ります。
+
+プログラミング経験ゼロの僕が、Claude ProとCursorを併用して月$40払っていた時期がありました。今はClaude Codeだけで月$20。**コストは半分になったのに、できることはむしろ増えました。**
+
+<div class="merit-cards merit-cards-3col">
+  <div class="merit-card">
+    <div class="merit-card-label">月額コスト</div>
+    <div class="merit-card-amount">$40→$20</div>
+    <p class="merit-card-note">Claude Pro + Cursor → Claude Codeのみ</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">使うツール</div>
+    <div class="merit-card-amount">2つ→1つ</div>
+    <p class="merit-card-note">行ったり来たりがなくなった</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">使用上限のストレス</div>
+    <div class="merit-card-amount">激減</div>
+    <p class="merit-card-note">Cursorの上限問題から解放</p>
+  </div>
+</div>
+
+この記事では、僕がどんなワークフローで2つのツールを使い分けていたのか、なぜClaude Codeに一本化したのか、その過程で気づいた「非エンジニアにとってのAIツール選び」について書きます。
+
+<div class="toc-section">
+  <strong>この記事の内容</strong>
+  <ol>
+    <li><a href="#僕のaiツール遍歴">僕のAIツール遍歴</a></li>
+    <li><a href="#cursorで感じたここがつらい">Cursorで感じた「ここがつらい」</a></li>
+    <li><a href="#claude-codeとの出会い">Claude Codeとの出会い</a></li>
+    <li><a href="#乗り換えてわかったこと">乗り換えてわかったこと</a></li>
+    <li><a href="#契約の落とし穴アプリ経由-vs-直接契約">契約の落とし穴：アプリ経由 vs 直接契約</a></li>
+    <li><a href="#aiに聞いても出てこなかったツール選びの勘所">AIに聞いても出てこなかった「ツール選びの勘所」</a></li>
+  </ol>
+</div>
+
+## 僕のAIツール遍歴
+
+2026年1月、サウナブログをWordPressで始めたのがすべての出発点です。
+
+記事を書くより設定に時間がかかるWordPressに疲れて、「AIでWebサイトが作れるらしい」と聞いたのがきっかけでした。
+
+そこからの遍歴はこんな感じです。
+
+<div class="process-timeline">
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">1</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">Claude Pro（$20/月）を契約</div>
+      <p class="process-timeline-desc">まずはClaude Proに登録。チャット画面でコードの相談をしていた。でもこの時点ではClaude Codeの存在を知らなかった。チャットでは「プロジェクト全体を見て修正して」ができない。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">2</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">Cursor（$20/月）を追加契約</div>
+      <p class="process-timeline-desc">「プロジェクトフォルダを丸ごと読み込んで編集できる」と聞いてCursorを導入。これでClaude chatの弱点をカバーできると思った。月額は計$40に。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">3</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">Claude chat → Cursor の二段階ワークフロー</div>
+      <p class="process-timeline-desc">Claude Proのチャットで「こういうことがしたい」と相談してプロンプトを作成。そのプロンプトをCursorに投げてコードを生成するという、ちょっと回りくどい使い方をしていた。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">4</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">Claude Codeに出会い、一本化</div>
+      <p class="process-timeline-desc">「Claude Codeならプロジェクト全体を読み込んで、ターミナルからそのまま修正できる」と知る。試してみたら本当にできた。Cursorの課金を解除。月額$20に。</p>
+    </div>
+  </div>
+</div>
+
+今振り返ると、「2つのツールを行ったり来たりしていた時期」が一番非効率でした。でも当時はそれが最善だと思っていたんですよね。
+
+## Cursorで感じた「ここがつらい」
+
+誤解しないでほしいのですが、Cursor自体は優れたツールです。GUIで操作できるので非エンジニアには直感的だし、プロジェクトフォルダを読み込めるのは大きな強みでした。
+
+でも、実際に使い続けると壁にぶつかりました。
+
+### すぐに使用上限に達する
+
+Cursorでは、AIモデルごとに使用回数の上限があります。僕はCursorの中でもClaudeモデルを選んで使っていました。理由は単純で、**コードの生成能力が一番高いと感じた**から。
+
+でも、Claudeモデルはすぐに上限に達します。上限を超えると、リセットされるまで**1ヶ月待ち**。その間は性能の低いモデルでやりくりするしかない。
+
+ブログを作っている途中で「今月はもう使えません」と言われるストレスは、想像以上でした。
+
+### 知らないうちに課金されていた
+
+これは僕のミスでもあるのですが、Cursorの課金体系をちゃんと理解しないまま使い始めてしまい、**気づいたら想定外の請求が来ていました。**
+
+しかもリセットは1ヶ月後。日割り計算もない。「今月はもういいや」と思ってもお金は戻らない。
+
+### 最高のモデルがClaudeなら...
+
+Cursorの中で使えるAIモデルをいくつか試して、結局**Claudeが一番いい**という結論に至りました。文章の自然さ、コードの正確さ、指示の理解力、すべてにおいてClaudeが上でした。
+
+そこでふと思ったんです。
+
+**「Cursorの中でClaude使うくらいなら、Claudeに直接頼めばよくない？」**
+
+この疑問が、Claude Codeへの乗り換えのきっかけでした。
+
+## Claude Codeとの出会い
+
+Claude Codeの存在を知ったとき、最初に感じたのは**不安**でした。
+
+「ターミナル」という言葉だけで、プログラマー専用のツールだと思い込んでいたからです。黒い画面にコマンドを打ち込む — 非エンジニアの僕には敷居が高く見えました。
+
+### 実際に使ってみたら
+
+でも試してみると、全然違いました。
+
+Claude Codeでは、日本語で「トップページのデザインを変えてほしい」と伝えるだけで、プロジェクト全体のファイルを読み込んで、適切なファイルを見つけて、コードを修正してくれます。
+
+**これ、Cursorでやっていたことと全く同じです。** しかもClaude Proの契約だけで使える（追加課金なし）。
+
+Cursorの最大の魅力だった「プロジェクトフォルダを丸ごと読み込める」という機能、Claude Codeでは最初から標準装備でした。
+
+### ターミナルの壁は思ったより低かった
+
+正直に言うと、ターミナルを使うこと自体には30分で慣れました。
+
+なぜなら、Claude Code自体が「次はこのコマンドを実行しますか？」と聞いてくれるからです。コマンドを覚える必要がない。Claude Codeが提案してくれたものを「はい」「いいえ」で選ぶだけ。
+
+GUIとターミナルの違いは、**ボタンをクリックするか、Enterキーを押すか**の違いでしかありませんでした。
+
+## 乗り換えてわかったこと
+
+約2ヶ月間、両方を使ってみて見えた違いをまとめます。
+
+<div class="compare-cards">
+  <div class="compare-card">
+    <div class="compare-card-header">Claude Pro + Cursor 時代</div>
+    <div class="compare-card-body">
+      <div class="compare-card-row">
+        <div class="compare-card-label">月額</div>
+        <div class="compare-card-value">$40（$20 + $20）</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">操作</div>
+        <div class="compare-card-value">GUI（直感的）</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">使用上限</div>
+        <div class="compare-card-value">すぐ上限 → 1ヶ月リセット待ち</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">ワークフロー</div>
+        <div class="compare-card-value">2ツール行ったり来たり</div>
+      </div>
+    </div>
+  </div>
+  <div class="compare-cards-arrow">→</div>
+  <div class="compare-card compare-card--highlight">
+    <div class="compare-card-header">Claude Code 時代</div>
+    <div class="compare-card-body">
+      <div class="compare-card-row">
+        <div class="compare-card-label">月額</div>
+        <div class="compare-card-value">$20（Claude Proのみ）</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">操作</div>
+        <div class="compare-card-value">ターミナル（30分で慣れた）</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">使用上限</div>
+        <div class="compare-card-value">ゆとりあり（Maxプランなら実質無制限）</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">ワークフロー</div>
+        <div class="compare-card-value">1つで完結</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+数字だけ見ると「コストが半分になっただけ」に見えるかもしれません。でも体験として一番大きかったのは、**使用上限のストレスから解放されたこと**です。
+
+Cursorで「今月もう使えない」と言われて作業が止まる体験は、特に非エンジニアにとっては致命的です。何かエラーが出ても自分では解決できない。AIに頼れない時間が突然やってくるのが本当につらかった。
+
+## 契約の落とし穴：アプリ経由 vs 直接契約
+
+記事の本題からは少し外れますが、僕が実際にハマった課金の落とし穴を共有しておきます。
+
+僕は最初、**Googleアプリ（Gemini）経由でClaudeのMaxプラン（$100/月）を契約**していました。
+
+これが失敗でした。
+
+<div class="compare-cards">
+  <div class="compare-card compare-card--risk">
+    <div class="compare-card-header">アプリ経由で契約した場合</div>
+    <div class="compare-card-body">
+      <div class="compare-card-row">
+        <div class="compare-card-label">Max $100プラン</div>
+        <div class="compare-card-value">約20,000円/月</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">上乗せ分</div>
+        <div class="compare-card-value">約5,000円（App Store手数料）</div>
+      </div>
+    </div>
+  </div>
+  <div class="compare-cards-arrow">→</div>
+  <div class="compare-card compare-card--highlight">
+    <div class="compare-card-header">claude.ai で直接契約した場合</div>
+    <div class="compare-card-body">
+      <div class="compare-card-row">
+        <div class="compare-card-label">Max $100プラン</div>
+        <div class="compare-card-value">約15,000円/月</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">上乗せ分</div>
+        <div class="compare-card-value">なし</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+**年間で約60,000円の差**です。
+
+GoogleやAppleのアプリストア経由でサブスクリプションを契約すると、プラットフォームの手数料（約30%）が上乗せされます。これはClaudeに限った話ではなく、多くのアプリで同じことが起きています。
+
+<div class="highlight-box">
+
+**覚えておくべきこと**: AIツールのサブスクリプションは、**公式サイト（claude.ai）から直接契約するのが一番安い**。アプリで試して「いいな」と思っても、課金は公式サイトからにしましょう。
+
+</div>
+
+## AIに聞いても出てこなかった「ツール選びの勘所」
+
+最後に、僕がツールを選ぶ過程で「AIに聞いても答えが出なかった」と感じたことを3つ書いておきます。
+
+### 使用上限のストレスは、使わないとわからない
+
+「Cursorの使用上限は？」とAIに聞けば、プランごとの回数は教えてくれます。でも、**「実際にその上限に引っかかったときのストレス」**は教えてくれません。
+
+僕の場合、ブログのデザインを大幅に変更する作業の途中で上限に達しました。中途半端な状態のサイトを1ヶ月放置するわけにもいかず、結局Cursorの低性能モデルで四苦八苦しました。
+
+この「上限タイミングの運ゲー感」は、実際に体験しないとわからないものです。
+
+### 非エンジニアにとっての「直感的」は、慣れの問題でしかない
+
+AIに「CursorとClaude Codeどちらが非エンジニア向き？」と聞くと、たいてい「CursorはGUIなので直感的」と返ってきます。
+
+でもこれ、本当にそうでしょうか？
+
+僕はGUIのCursorを使っているとき、どのボタンが何をするのか、設定画面のどこをいじればいいのか、ちゃんとはわかっていませんでした。一方、Claude Codeは「やりたいことを日本語で書くだけ」。**どちらが「直感的」かは、GUIかターミナルかではなく、どちらに慣れるかの問題でした。**
+
+そして非エンジニアが慣れるのにかかった時間は、どちらも大差ありませんでした。
+
+### 「自分に合うかどうか」は比較表では判断できない
+
+Webで「Claude Code vs Cursor 比較」と検索すると、機能の比較表がたくさん出てきます。AIに聞いても似たような比較表を作ってくれます。
+
+でも、その比較表を見て僕が判断できたかというと、**できませんでした。**
+
+結局「使ってみてダメだったらやめる」しかなかった。そして僕の場合は、Cursorをやめてよかった。**スペック比較で正解は出ない。自分の手で触って、自分の使い方で判断するしかない。** これがAIには教えられない、一番大事なことだと思います。
+
+## まとめ
+
+<div class="summary-box">
+  <ul>
+    <li>Claude Pro + Cursor（月$40）→ Claude Code一本（月$20）に乗り換えた</li>
+    <li>Cursorの使用上限ストレスから解放されたのが一番大きかった</li>
+    <li>ターミナルの心理的ハードルは、実際には30分で消えた</li>
+    <li>アプリ経由の契約は手数料で年間約60,000円の損。直接契約が正解</li>
+    <li>AIツール選びは比較表では判断できない。触って合わなければ変える</li>
+  </ul>
+</div>
+
+ちなみに、CursorやWindsurf以外にも、GitHub CopilotやReplit Agentなど、AIコーディングツールは次々と登場しています。どれが「正解」かは人によって違います。
+
+ただ、非エンジニアの僕が2ヶ月かけてたどり着いた結論はシンプルです。**Claudeの性能が一番いいと感じたなら、Claude Codeを直接使うのが最短ルート**。間に別のツールを挟む必要はありませんでした。
+
+<InternalLinkCard slug="story-zero-code-blog" headerText="僕がブログを始めた経緯はこちら" />
+
+<InternalLinkCard slug="setup-claude-code-getting-started" headerText="Claude Codeの始め方はこちら" />
