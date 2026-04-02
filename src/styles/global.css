@@ -6,22 +6,8 @@
 		BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
 		"Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
 
-	/* Primary color scale (teal) */
-	--color-primary-50: #F0FAF8;
-	--color-primary-100: #D5F0EB;
-	--color-primary-200: #ABE1D8;
-	--color-primary-300: #7ACDBF;
-	--color-primary-400: #4DB5A4;
-	--color-primary-500: #3A9E8C;
-	--color-primary-600: #2A7D6E;
-	--color-primary-700: #236659;
-	--color-primary-800: #1D5148;
-	--color-primary-900: #1A4440;
-	--color-primary-950: #0D2825;
-	--color-primary: #236559;
-
 	/* Accent color */
-	--color-accent: #1F6B5E;
+	--color-accent: #0E7490;
 
 	/* ── Brand Colors（article-body.css共有用） ── */
 	--color-brand: #0E7490;
@@ -42,8 +28,8 @@
 	--icon-checkmark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E7490' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
 
 	/* Additional custom colors */
-	--color-teal: #1F6B5E;
-	--color-teal-light: #2A7D6E;
+	--color-teal: #0E7490;
+	--color-teal-light: #06B6D4;
 	--color-bg: #F4F8F7;
 	--color-text: #333333;
 

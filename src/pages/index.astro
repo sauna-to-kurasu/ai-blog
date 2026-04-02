@@ -66,7 +66,7 @@ const categorySlugMap: Record<string, string> = {
 
   {/* Posts */}
   <section id="posts" class="max-w-5xl mx-auto px-4 py-16">
-    <h2 class="text-xl font-bold mb-8" style="color: #1F6B5E;">記事一覧</h2>
+    <h2 class="text-xl font-bold mb-8" style="color: #0E7490;">記事一覧</h2>
     {posts.length === 0 ? (
       <div class="bg-white rounded-xl p-10 text-center border border-gray-200">
         <p class="text-gray-500">記事を準備中です。</p>
@@ -97,7 +97,7 @@ const categorySlugMap: Record<string, string> = {
                   <FormattedDate date={post.data.pubDate} />
                 </span>
               </div>
-              <h3 class="text-[15px] md:text-base font-bold text-gray-800 leading-relaxed group-hover:text-[#1F6B5E] transition-colors">
+              <h3 class="text-[15px] md:text-base font-bold text-gray-800 leading-relaxed group-hover:text-[#0E7490] transition-colors">
                 {post.data.title}
               </h3>
               {post.data.description && (
