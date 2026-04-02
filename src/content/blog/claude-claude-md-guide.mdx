@@ -1,0 +1,284 @@
+---
+title: "CLAUDE.mdの書き方。AIへの「取扱説明書」を育てる方法"
+description: "Claude CodeのCLAUDE.mdとは何か、何を書けばいいのか。2サイトを運用する非エンジニアが、実例付きで解説します。"
+pubDate: 2026-04-02
+category: "Claude Code"
+---
+
+import InternalLinkCard from '../../components/InternalLinkCard.astro';
+
+## 結論：CLAUDE.mdは、AIへの「取扱説明書」
+
+Claude Codeを使っていて、こんな経験はありませんか？
+
+「さっきも言ったのに、また同じミスをする」「毎回ゼロから説明し直すのが面倒」
+
+僕もそうでした。Claude Codeは優秀ですが、**何も伝えなければ毎回まっさらな状態で仕事を始めます。** 前回の会話で伝えたルールも、デザインの好みも、使っている技術も覚えていません。
+
+CLAUDE.mdは、この問題を解決するファイルです。
+
+<div class="merit-cards merit-cards-3col">
+  <div class="merit-card">
+    <div class="merit-card-label">CLAUDE.mdとは</div>
+    <div class="merit-card-amount">AIの取扱説明書</div>
+    <p class="merit-card-note">プロジェクトのルートに置くだけ</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">効果</div>
+    <div class="merit-card-amount">指示の手間が激減</div>
+    <p class="merit-card-note">毎回説明し直す苦痛がなくなる</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">最初に必要な時間</div>
+    <div class="merit-card-amount">15分</div>
+    <p class="merit-card-note">あとは使いながら育てる</p>
+  </div>
+</div>
+
+<div class="toc-section">
+  <strong>この記事の内容</strong>
+  <ol>
+    <li><a href="#claude.mdとは何か">CLAUDE.mdとは何か</a></li>
+    <li><a href="#僕のclaude.mdの中身を公開">僕のCLAUDE.mdの中身を公開</a></li>
+    <li><a href="#claude.mdに書くべき7つの項目">CLAUDE.mdに書くべき7つの項目</a></li>
+    <li><a href="#aiに聞いても教えてくれなかったこと">AIに聞いても教えてくれなかったこと</a></li>
+    <li><a href="#claude.mdは育てるもの">CLAUDE.mdは「育てるもの」</a></li>
+  </ol>
+</div>
+
+## CLAUDE.mdとは何か
+
+CLAUDE.mdは、**プロジェクトのルートフォルダに置くテキストファイル**です。Claude Codeは会話を始めるたびにこのファイルを自動で読み込んで、書かれたルールに従って動きます。
+
+イメージとしては、新しいアルバイトに渡す「業務マニュアル」のようなものです。
+
+- 「うちの店では、お客さんには敬語で話してね」 → **文体のルール**
+- 「冷蔵庫の食材は左から使ってね」 → **ファイル管理のルール**
+- 「レジ締めの手順はこの紙を見てね」 → **ワークフローの指示**
+
+CLAUDE.mdがない状態は、マニュアルなしでアルバイトに仕事を任せるようなもの。毎回「あ、それはこうして」「いや、そうじゃなくて」と口頭で指示し直す必要があります。
+
+僕は最初、CLAUDE.mdなしでClaude Codeを使っていました。そのときの一番のストレスは、**「このブログの文体は"です・ます"調にして」と毎回伝えること**でした。CLAUDE.mdに1行書くだけで、この手間が完全になくなりました。
+
+## 僕のCLAUDE.mdの中身を公開
+
+実際に僕がこのブログ「AIと暮らす。」で使っているCLAUDE.mdの主要な部分を紹介します。
+
+### Role & Identity（AIの人格設定）
+
+```markdown
+## Role & Identity
+あなたはブログ「AIと暮らす。」の執筆者です。
+30代・共働き・子育て中の男性として振る舞ってください。一人称は「僕」。
+
+- 読者ターゲット: 30-40代の非エンジニア
+- 文体: 丁寧だが堅苦しくない「です・ます」調
+- 構成: 結論ファースト
+- NG: 抽象的な表現（「簡単です」ではなく「15分で完了」と具体的に）
+```
+
+**なぜこれを書いたか**: Claude Codeは何も指定しないと、一般的な解説口調で書きます。でも僕のブログは「30代の非エンジニアが書いている」というキャラクター設定が大事なので、人格から定義しています。
+
+### Tech Stack（使う技術の明示）
+
+```markdown
+## Tech Stack
+- パッケージマネージャ: pnpm（npm は使用しない）
+- リンター/フォーマッター: Biome（ESLint/Prettier は使用しない）
+- フレームワーク: Astro v5 + React 19 + MDX
+- ホスティング: Cloudflare Pages
+```
+
+**なぜこれを書いたか**: Claude Codeは文脈によってnpmとpnpmを使い分けることがあります。「pnpmを使って」と毎回伝えるのが面倒だったので書きました。同様に、ESLintではなくBiomeを使っていることも明示しています。**「使わないもの」を書くのがポイントです。**
+
+### Development Workflow（作業の流れ）
+
+```markdown
+## Development Workflow
+1. 実装完了後、pnpm dev でサーバーを起動し、ローカル確認を行う
+2. レスポンシブ確認（375px / 768px / 1280px）も実施する
+3. この時点では git 操作を一切提案しない
+4. ユーザーから「OK」の返答があった後に初めてコミット・プッシュを提案する
+5. ユーザーの承認なしに git push しないこと
+```
+
+**なぜこれを書いたか**: これは実際に痛い目を見たから追加したルールです。Claude Codeは親切心から「コミットしておきましょうか？」と提案してくることがあります。でも僕は、**必ず自分の目でブラウザ確認してからコミットしたい**。このルールを入れてから、勝手にgit操作される心配がなくなりました。
+
+### カラーパレット
+
+```markdown
+## カラーパレット
+
+### 記事本文
+accent:        #0E7490   メインアクセント
+accentHover:   #06B6D4   ホバー
+boxBg:         #ECFEFF   ボックス背景
+
+Tailwind 標準の青系（#2563eb 等）は使用禁止。
+```
+
+**なぜこれを書いたか**: Claude Codeにデザインを任せると、Tailwindのデフォルトカラーを使いがちです。ある日「なんか見覚えのない青色が混ざってるな...」と気づいて、カラーコードを明示するようにしました。**「使用禁止」と明記するのが大事です。**
+
+## CLAUDE.mdに書くべき7つの項目
+
+最初から完璧なCLAUDE.mdを書く必要はありません。でも、以下の7項目を意識しておくと、ゼロから始めやすくなります。
+
+<div class="process-timeline">
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">1</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">Role & Identity（AIの人格設定）</div>
+      <p class="process-timeline-desc">一人称、文体、読者ターゲット。AIが「誰として」「誰に向けて」書くかを決める</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">2</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">Tech Stack（使う技術の明示）</div>
+      <p class="process-timeline-desc">使うツールと「使わないツール」の両方を書く。npmではなくpnpm、のように</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">3</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">Development Workflow（作業の流れ）</div>
+      <p class="process-timeline-desc">確認手順、git操作のタイミング。「いつ何をするか」の手順書</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">4</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">Key Conventions（ファイル・URL規則）</div>
+      <p class="process-timeline-desc">記事ファイルの置き場所、画像形式、URL構造などのルール</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">5</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">カラーパレット / デザインルール</div>
+      <p class="process-timeline-desc">使う色、使わない色、フォント。デザインの一貫性を保つための制約</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">6</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">カテゴリ体系</div>
+      <p class="process-timeline-desc">ブログのカテゴリ名とURLスラッグ。記事を書くときにAIが正しいカテゴリを選べるようになる</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">7</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">NGルール（やってほしくないこと）</div>
+      <p class="process-timeline-desc">禁止カラー、勝手なgit push、抽象的な表現。「やるべきこと」より「やってはいけないこと」が効く</p>
+    </div>
+  </div>
+</div>
+
+<div class="info-highlight-box">
+  <p><strong>最初は3つでOK</strong>: いきなり7項目を埋める必要はありません。まずは「Role & Identity」「Tech Stack」「NGルール」の3つだけ書いてみてください。15分あれば十分です。残りは使いながら追加していけばOKです。</p>
+</div>
+
+## AIに聞いても教えてくれなかったこと
+
+正直に言うと、「CLAUDE.md 書き方」でClaude Codeに聞いても、汎用的なテンプレートしか返ってきません。「プロジェクトの概要を書きましょう」「技術スタックを明示しましょう」...間違ってはいないけれど、**それだけではCLAUDE.mdは機能しません。**
+
+僕が実際に運用して気づいたのは、**本当に効くルールは「ミスの後」に生まれる**ということです。
+
+<div class="highlight-box">
+  <ul>
+    <li><strong>「Tailwind標準の青禁止」</strong>: Claude Codeがデフォルトカラーを使って、サイトの色がバラバラになった → 追加</li>
+    <li><strong>「git push禁止」</strong>: Claude Codeが確認なしにpushしようとした → 追加</li>
+    <li><strong>「npmではなくpnpm」</strong>: npmでパッケージを入れられてしまい、lock fileが二重になった → 追加</li>
+    <li><strong>「"簡単です"は使わない」</strong>: 読者に「簡単」と言うのは無責任だと気づいた → 「15分で完了」のように具体的に書くルールを追加</li>
+  </ul>
+</div>
+
+どのルールも、**最初から思いついたものではなく、実際にミスが起きてから追加したもの**です。
+
+これがAIに聞いても出てこない理由は明確で、AIは「あなたのプロジェクトで何が起きたか」を知らないからです。CLAUDE.mdのテンプレートは出力できても、あなたのプロジェクトに本当に必要なルールは、あなた自身が使いながら見つけるしかありません。
+
+## CLAUDE.mdは「育てるもの」
+
+最初は10行でいいんです。使っていくうちに「あ、これもルールにしておこう」と思う瞬間が必ず来ます。
+
+僕の場合、もう1つ運営しているサウナブログがいい例です。
+
+<div class="compare-cards">
+  <div class="compare-card">
+    <div class="compare-card-header">初期（1週間目）</div>
+    <div class="compare-card-body">
+      <div class="compare-card-row">
+        <div class="compare-card-label">ファイル数</div>
+        <div class="compare-card-value">CLAUDE.md 1ファイル</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">内容</div>
+        <div class="compare-card-value">文体と技術スタック程度</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">行数</div>
+        <div class="compare-card-value">約30行</div>
+      </div>
+    </div>
+  </div>
+  <div class="compare-cards-arrow">→</div>
+  <div class="compare-card compare-card--highlight">
+    <div class="compare-card-header">3ヶ月後（現在）</div>
+    <div class="compare-card-body">
+      <div class="compare-card-row">
+        <div class="compare-card-label">ファイル数</div>
+        <div class="compare-card-value">CLAUDE.md + ルールファイル19個</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">内容</div>
+        <div class="compare-card-value">記事構成、デザイン、画像処理、git運用...</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">行数</div>
+        <div class="compare-card-value">合計500行以上</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+サウナブログでは、CLAUDE.mdが大きくなりすぎたので、ルールを`.claude/rules/`フォルダに分割しています。記事の書き方、デザインルール、画像処理の手順、git運用のルール...それぞれ専用ファイルに分けることで、CLAUDE.md本体はコンパクトに保っています。
+
+最初からこの構成だったわけではありません。使いながら「これはルール化したほうがいい」と気づくたびに、少しずつ追加してきた結果です。
+
+<div class="info-highlight-box">
+  <p><strong>ルールファイルの分割は後でいい</strong>: まずはCLAUDE.md 1ファイルに全部書く方式で始めてください。行数が100行を超えてきたら、カテゴリごとにファイルを分けることを検討する、くらいの感覚でOKです。</p>
+</div>
+
+### 「正解のCLAUDE.md」は存在しない
+
+ここまで読んで「で、結局どう書けばいいの？」と思った方へ。
+
+残念ながら、万能なテンプレートは存在しません。ブログを書く人と、Webアプリを作る人と、データ分析をする人では、必要なルールがまったく違います。
+
+でも、これだけは共通しています。
+
+1. **小さく始める**（最初は3項目、15分でOK）
+2. **ミスのたびにルールを追加する**（「もうこれはやらないで」をそのまま書く）
+3. **「手順」よりも「判断基準」を書く**（「pnpmを使う」ではなく「npmは使わない。理由: lock fileの二重管理を防ぐため」）
+
+CLAUDE.mdは一度書いて終わりではなく、AIと一緒に仕事をしながら育てていくものです。最初の15分で書いた10行が、3ヶ月後には500行になっているかもしれません。でもそれは、あなたがAIとの付き合い方を学んできた証拠です。
+
+<div class="summary-box">
+  <div class="summary-box-header">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span>この記事のポイント</span>
+  </div>
+  <div class="summary-box-content">
+    <ul>
+      <li>CLAUDE.mdは、Claude Codeがプロジェクト開始時に自動で読み込む「取扱説明書」</li>
+      <li>最初は「Role」「Tech Stack」「NGルール」の3つだけでOK（15分で書ける）</li>
+      <li>本当に効くルールは「ミスの後」に生まれる。使いながら育てるのが正解</li>
+      <li>「やるべきこと」よりも「やってはいけないこと」を書くほうが効果が高い</li>
+    </ul>
+  </div>
+</div>
+
+### このブログもCLAUDE.mdで動いています
+
+<InternalLinkCard slug="story-zero-code-blog" headerText="体験記を読む" />
