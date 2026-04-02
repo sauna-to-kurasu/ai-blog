@@ -20,23 +20,21 @@ const ogImageUrl = image ? new URL(image.src, Astro.url) : new URL('/images/og-d
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-<!-- TODO: Google Search Console verification (取得後に設定) -->
-<!-- <meta name="google-site-verification" content="YOUR_ID" /> -->
+<!-- Google Search Console verification -->
+<meta name="google-site-verification" content="ZyH8kf-lVo19Er2SjRWPPfLFj4_-vsWU2qmRzvTd8yI" />
 
-<!-- TODO: Google Analytics (GA4) - 取得後に設定 -->
-<!--
+<!-- Google Analytics (GA4) - 本番環境のみ -->
 {import.meta.env.PROD && (
   <>
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-VTTG5CHVCJ"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
+      gtag('config', 'G-VTTG5CHVCJ');
     </script>
   </>
 )}
--->
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="sitemap" href="/sitemap-index.xml" />
