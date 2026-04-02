@@ -1,0 +1,236 @@
+---
+title: "月額0円でブログを運用して1ヶ月。Astro + Cloudflareの実態"
+description: "Astro + Cloudflare Pagesで月額0円のブログを立ち上げて1ヶ月。24コミット、6記事、PV5。非エンジニアが実際に運用して感じた快適さと不便さを正直に記録します。"
+pubDate: 2026-04-03
+category: "体験記"
+---
+
+import InternalLinkCard from '../../components/InternalLinkCard.astro';
+
+## 結論：月額0円でも、ちゃんと「運用」できている
+
+「無料ホスティングって、なんか不安じゃない？」
+
+正直、僕もそう思っていました。でも1ヶ月運用してみた結論は、**「何も困っていない」**です。サーバーが落ちたこともなければ、表示が遅いと感じたこともない。月額0円なのに。
+
+<div class="merit-cards merit-cards-3col">
+  <div class="merit-card">
+    <div class="merit-card-label">公開した記事</div>
+    <div class="merit-card-amount">6本</div>
+    <p class="merit-card-note">5日で1本ペース</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">デプロイ回数</div>
+    <div class="merit-card-amount">24回</div>
+    <p class="merit-card-note">git pushのたびに自動ビルド</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">ダウンタイム</div>
+    <div class="merit-card-amount">0回</div>
+    <p class="merit-card-note">1ヶ月間、一度も落ちていない</p>
+  </div>
+</div>
+
+この記事では、1ヶ月間の運用で実際に何が起きたのかを、数字と体験で正直に記録します。コスト構造の詳細は別記事にまとめているので、ここでは**「日々の運用がどうだったか」**にフォーカスします。
+
+<InternalLinkCard slug="ops-annual-cost-1550-yen" headerText="コスト構造の詳細はこちら" />
+
+## このブログの1ヶ月を振り返る
+
+まずは、立ち上げから今日までの流れを時系列で。
+
+<div class="process-timeline">
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">1</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">3/29 — リポジトリ作成・初記事公開</div>
+      <p class="process-timeline-desc">サウナブログのテンプレートを流用して、Astroプロジェクトを初期化。その日のうちに最初の記事を公開。サウナブログで蓄積したCLAUDE.mdやルールファイルがあったから、ゼロからではなく「80%完成した状態」からのスタートだった。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">2</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">3/30 — モバイル開発環境の構築</div>
+      <p class="process-timeline-desc">Tailscale + Termiusで、iPhoneからブログを更新できる環境を整備。通勤電車の中でも記事が書ける体制に。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">3</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">3/31 — 戦略策定・デザイン刷新</div>
+      <p class="process-timeline-desc">Claude Codeのエージェントチームに市場調査を依頼。競合分析と戦略設計を1日で完了。同時にサイトのカラーパレットをダーク×シアンのテックエディトリアルに一新。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">4</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">4/1 — ドメイン取得・本番デプロイ</div>
+      <p class="process-timeline-desc">Cloudflare Registrarで ai-to-kurasu.dev を取得。GitHubリポジトリとCloudflare Pagesを接続して、git pushで自動デプロイされる環境が完成。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">5</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">4/2 — GA4・Search Console設定</div>
+      <p class="process-timeline-desc">アクセス解析とSEOの基盤を整備。AIにスクリーンショットを見せながら設定したら、15分で完了。shikiによるコードハイライトも追加。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">6</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">4/3 — 6記事目を公開（今ここ）</div>
+      <p class="process-timeline-desc">立ち上げから6日目で6本の記事を公開。ここまでの全コミット数は24回。</p>
+    </div>
+  </div>
+</div>
+
+振り返ると、**立ち上げから本番公開まで3日**。WordPressの時は、サーバー契約→テーマ選び→プラグイン設定→デザイン調整で1週間以上かかっていたことを思い出すと、この速さは異常です。
+
+## 「git pushしたら公開」の快適さ
+
+1ヶ月運用して一番変わったのは、**記事を公開するまでのステップ数**です。
+
+WordPress時代の公開フローはこうでした。
+
+1. WordPressの管理画面にログイン
+2. 投稿画面で記事を書く
+3. プレビューで確認
+4. アイキャッチ画像を設定
+5. カテゴリ・タグを設定
+6. SEO設定（Yoast等のプラグイン）
+7. 「公開」ボタンを押す
+
+今はこうです。
+
+1. Claude Codeに「記事を書いて」と伝える
+2. ローカルで表示確認
+3. `git push`
+
+**以上。** git pushした瞬間に、Cloudflare Pagesが自動でビルドを開始して、だいたい1〜2分後には本番に反映される。管理画面にログインする必要もなければ、プラグインの設定画面を開く必要もない。
+
+この「pushしたら公開」という体験に慣れてしまうと、もうWordPressの管理画面には戻れないと思います。
+
+<div class="info-highlight-box">
+
+**補足**: Cloudflare Pagesには「プレビューデプロイ」という機能もあります。mainブランチ以外にpushすると、本番とは別のURLでプレビューが見られる。ただ正直、僕は使っていません。ローカルの `pnpm dev` で確認して、そのままmainにpushしています。個人ブログなので、そのくらいの気軽さでいい。
+
+</div>
+
+## 正直、不便だったこと
+
+いいことばかり書いても信用されないと思うので、正直に不便だったことも書きます。
+
+### 画像の管理が少し面倒
+
+WordPressなら、管理画面にドラッグ＆ドロップで画像をアップロードできました。今は、WebP形式に変換して、100KB以下に圧縮して、`src/assets/` に保存して、MDXファイルからパスを指定する。
+
+慣れれば30秒の作業ですが、WordPressの「画像をポイっとする」手軽さに比べると、一手間多い。これはClaude Codeに「この画像をWebPに変換して圧縮して」とお願いすれば自動でやってくれるので、実際にはそこまで負担ではありません。でも最初は戸惑いました。
+
+### 管理画面がない不安
+
+これは完全に「慣れ」の問題でした。
+
+WordPressには管理画面があって、記事一覧、アクセス数、コメント、プラグインの状態が一目でわかる。それがないのは最初、少し不安でした。「ちゃんと公開されてるかな？」「ビルド失敗してないかな？」と何度もCloudflareのダッシュボードを見に行った。
+
+1週間もすると、この不安は完全に消えました。git pushして、1〜2分待って、サイトを開けば反映されている。それだけのことでした。
+
+### 「ちょっとデザインを変えたい」のハードル
+
+WordPressなら、管理画面の「外観」→「カスタマイズ」で色やフォントを変えられました。
+
+今は、Claude Codeに「ここの色を変えて」と伝えて、CSSを変更してもらって、確認して、pushする。**結果的にはWordPressより自由度が高い**のですが、「ポチッと変える」手軽さはない。その代わり、Claude Codeが「この色ならこっちのほうがコントラスト比が良いですよ」とプロ目線で提案してくれるので、仕上がりはWordPressの時より良くなりました。
+
+## WordPress時代と比べて変わったこと
+
+<div class="highlight-box">
+
+**メンテナンスの時間がゼロになった**
+
+WordPress時代は月に1〜2回、「本体のアップデート」「テーマのアップデート」「プラグインのアップデート」が来て、そのたびに「更新したら壊れないかな」とドキドキしていた。Astro + Cloudflareにはそれがない。依存パッケージの更新はあるけど、Claude Codeに任せれば5分で終わる。
+
+**プラグイン選びの時間がゼロになった**
+
+「SEOプラグインはYoastとAll in One SEOのどっちがいいか」「キャッシュプラグインは何がいいか」。WordPressの時はこの手の調査に何時間もかけていた。今は必要な機能があればClaude Codeに「作って」と言うだけ。プラグインの相性問題も存在しない。
+
+**記事を書くことに集中できるようになった**
+
+これが一番大きい。WordPressの時は、体感で**作業時間の3割がメンテナンス**だった。今はその3割がまるごと記事執筆に使える。月に1本多く書けるようになった計算。
+
+</div>
+
+## PV5。それでも続けている理由
+
+正直に公開します。このブログのGA4データです。
+
+GA4を設定したのが4月2日なので、まだ**たった1日分のデータ**しかありません。
+
+| 指標 | 数字 |
+|------|------|
+| ページビュー | 5 |
+| セッション | 3 |
+| ユーザー数 | 3 |
+| 計測期間 | 1日（4/2のみ） |
+
+PV5。しかもほぼ自分のアクセスです。
+
+普通に考えたら、「まだ誰にも読まれていない」。でも僕はこの数字を見て、落ち込むどころか**「まあそうだよな」**と思いました。
+
+理由は2つあります。
+
+**1つ目は、そもそもまだSEOが効くタイミングではないから。** Search Consoleに登録したのも4月2日。Googleにインデックスされて、検索結果に表示されて、クリックされるまでには最低でも2〜3ヶ月かかる。1ヶ月目にPVを気にしても意味がない。
+
+**2つ目は、「月額0円」の精神的な強さ。** WordPressの時は月1,000円以上のサーバー代を払っていたので、「元を取らなきゃ」というプレッシャーが常にあった。PVが伸びないと「お金を捨てている」気分になる。でも今は月額0円。年間のドメイン代1,550円だけ。**PVゼロでも赤字にならない。** だから焦らずに記事を積み上げることに集中できる。
+
+この「やめるハードルの低さ」は、始める前は気づかなかった大きなメリットでした。
+
+## AIに聞いても出てこなかった「運用の勘所」
+
+1ヶ月運用していて、「これはAIに聞いても答えが出ないな」と感じた場面が何度かありました。
+
+### どのタイミングで記事を公開すべきか
+
+AIに「ブログの記事はどのタイミングで公開すべきですか？」と聞くと、「朝の通勤時間帯が読まれやすい」「火曜と水曜がエンゲージメントが高い」といった一般論が返ってくる。
+
+でもこのブログはまだ立ち上げ1ヶ月目で、そもそも読者がいない。「最適な公開タイミング」を考えるより、**1本でも多く書いてインデックスを増やすほうが先**。そういう「今の自分のフェーズに合った判断」は、AIからは出てきませんでした。
+
+### サイトの方向性が合っているかどうか
+
+「非エンジニアのAI活用ブログ」という方向性で始めたけど、1ヶ月目は不安になる。「この方向で合ってるのかな」「もっとニッチなほうがいいのかな」。
+
+AIに聞くと、もっともらしい分析をしてくれる。でも最終的に「これでいく」と決めるのは自分。AIが出す分析は「一般的な市場」の話であって、「僕のブログ」の話ではない。
+
+### 完璧を求めるか、とりあえず出すか
+
+非エンジニアあるあるだと思うのですが、**記事の完成度が気になって公開できない**。「もうちょっとデザインを整えてから」「もう1セクション追加してから」。
+
+AIに「この記事、公開して大丈夫ですか？」と聞くと、「いくつか改善点があります」と言ってくる。そりゃそうだ、改善点がない記事なんてない。
+
+結局、**「60%の完成度でも出す」**と自分で決めるしかなかった。完璧を待っていたら、1ヶ月で6本なんて絶対に書けていません。
+
+## 1ヶ月やってみて思うこと
+
+月額0円でブログを運用して1ヶ月。わかったのは、**「月額0円」の本当の価値は、金銭的な節約ではない**ということです。
+
+もちろんWordPressより年間数万円安くなるのは事実。でもそれ以上に大きいのは、**「失敗しても痛くない」という安心感**。
+
+年間1,550円。1日あたり約4円。この金額なら、仮にブログが軌道に乗らなくても、「まあいい経験だったな」で済む。だから思い切って記事を書けるし、思い切ってデザインを変えられるし、思い切って方向転換もできる。
+
+WordPressの時は「月1,000円払ってるんだから」というプレッシャーが、知らず知らずのうちに自分の行動を制限していたんだと思います。
+
+## まとめ
+
+<div class="summary-box">
+
+**この記事のポイント**
+
+- 月額0円のブログを1ヶ月運用した結果：6記事・24デプロイ・ダウンタイム0回
+- 「git pushしたら公開」のワークフローは、WordPress管理画面より圧倒的に快適
+- 不便さはある（画像管理、管理画面なし）が、1週間で慣れる範囲
+- PV5でも焦らないのは、月額0円だから。「元を取らなきゃ」のプレッシャーがない
+- 「月額0円」の本当の価値は節約ではなく、**失敗を恐れずに続けられること**
+
+</div>
+
+<InternalLinkCard slug="ops-annual-cost-1550-yen" headerText="コスト構造の詳細" />
+
+<InternalLinkCard slug="ops-mobile-dev-environment" headerText="スマホからブログを更新する方法" />
