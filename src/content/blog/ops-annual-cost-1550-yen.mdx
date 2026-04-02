@@ -1,0 +1,299 @@
+---
+title: "ブログの運用コストを年間1,550円にした方法"
+description: "WordPressの年間3万円が、Astro + Cloudflare Pagesで年間1,550円に。2サイト運営する非エンジニアが、コスト構造と選んだ理由を正直に公開します。"
+pubDate: 2026-04-02
+category: "運用"
+---
+
+import InternalLinkCard from '../../components/InternalLinkCard.astro';
+
+## 結論：このブログの運用コストは、年間1,550円だけ
+
+「ブログを始めたい。でも、サーバー代って毎月かかるんでしょ？」
+
+僕も最初はそう思っていました。WordPressで月1,000円以上のサーバー代を払うのが当たり前だと。でもこのブログ「AIと暮らす。」の運用コストは、**年間たったの1,550円**です。月額じゃなくて、年額です。
+
+<div class="merit-cards merit-cards-3col">
+  <div class="merit-card">
+    <div class="merit-card-label">年間コスト</div>
+    <div class="merit-card-amount">約1,550円</div>
+    <p class="merit-card-note">ドメイン代のみ</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">サーバー代</div>
+    <div class="merit-card-amount">0円</div>
+    <p class="merit-card-note">Cloudflare Pages無料枠</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">有料テーマ</div>
+    <div class="merit-card-amount">0円</div>
+    <p class="merit-card-note">Claude Codeで生成</p>
+  </div>
+</div>
+
+この記事では、実際のコスト構造と、なぜこの方法を選んだのかを正直に公開します。
+
+## WordPressにかかっていたコスト
+
+僕はもともとWordPressでサウナブログを運営していました。WordPressは「無料で始められる」とよく言われますが、実際にはけっこうお金がかかります。
+
+| 項目 | 費用 | 備考 |
+|------|------|------|
+| レンタルサーバー | 月1,000〜1,500円 | ConoHa WING、エックスサーバー等 |
+| ドメイン | 年間約1,500円 | .comの場合 |
+| 有料テーマ | 10,000〜20,000円 | 初期費用（買い切り） |
+| 有料プラグイン | 年間3,000〜5,000円 | SEO、バックアップ等 |
+| **年間合計** | **約18,000〜35,000円** | **初年度はテーマ代でさらに高い** |
+
+月1,000円のサーバー代だけ見ると大したことない気がしますが、年間で計算すると意外と大きい。
+
+でも正直なことを言うと、**コスト以上にストレスだったのは管理の手間**でした。WordPress本体のアップデート、テーマのアップデート、プラグイン同士の相性問題。「このプラグインを更新したら、表示が崩れた」みたいなことが定期的に起きて、そのたびに半日つぶれる。ブログを書く時間より、メンテナンスの時間のほうが長い月もありました。
+
+## なぜWordPressをやめたのか
+
+きっかけは、Claude Codeに出会ったことでした。
+
+「プログラミング経験ゼロでも、AIに日本語で話しかけるだけでWebサイトが作れる」。最初はまったく信じていませんでした。でも実際にやってみたら、本当に動くサイトが30分でできた。その話は別の記事に詳しく書いています。
+
+<InternalLinkCard slug="story-zero-code-blog" headerText="体験記を読む" />
+
+WordPressをやめた理由は、コストだけじゃありません。
+
+- **管理の面倒さ**: アップデート対応、プラグインの相性チェック、バックアップの心配
+- **セキュリティの不安**: WordPress自体が攻撃対象になりやすい。セキュリティプラグインを入れても完全には安心できない
+- **表示速度の限界**: プラグインを増やすほど重くなる。「速度改善プラグイン」を入れて速くするという本末転倒
+
+そんなときに知ったのが「Astro + Cloudflare Pages」という組み合わせでした。最初は正直、半信半疑でした。「無料でホスティングって、何か裏があるんじゃないの？」と。
+
+## このブログのコスト構造を全部公開する
+
+### かかっているお金：.devドメイン 約1,550円/年
+
+このブログ（ai-to-kurasu.dev）のドメインは、Cloudflare Registrarで取得しました。.devドメインで年間約1,550円。これがこのブログの**唯一のランニングコスト**です。
+
+なぜ.devにしたかというと、テック系ブログなので「.dev」のほうがブランドとして伝わりやすいから。.comや.netも検討しましたが、「AIと暮らす」という日本語ブログに.comは少し違和感がありました。.devなら「技術系のサイトだな」と一目でわかる。
+
+Cloudflare Registrarのいいところは、**マークアップなしの原価販売**であること。他のレジストラだと「初年度1円！でも更新は3,000円」みたいなことがありますが、Cloudflareはそれがない。毎年同じ価格です。
+
+### かかっていないお金：ホスティング0円の仕組み
+
+サーバー代が0円と聞くと怪しく感じるかもしれません。でもこれはCloudflare Pagesの無料枠を使っているだけです。
+
+- **帯域幅**: 無制限（WordPressのサーバーだと制限があることも）
+- **プロジェクト数**: 無制限（何サイトでもOK）
+- **ビルド回数**: 月500回（個人ブログなら十分すぎる）
+- **SSL証明書**: 自動で無料
+
+「なぜ無料なのか」には、ちゃんと理由があります。Cloudflareのビジネスモデルは、無料で使い始めてもらって、企業が成長したら有料プランに移行する、というもの。個人ブログ規模のアクセスで有料枠に達することは、まずありません。
+
+<div class="compare-cards">
+  <div class="compare-card">
+    <div class="compare-card-header">WordPress構成</div>
+    <div class="compare-card-body">
+      <div class="compare-card-row">
+        <div class="compare-card-label">サーバー</div>
+        <div class="compare-card-value">月1,000〜1,500円</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">ドメイン</div>
+        <div class="compare-card-value">年間約1,500円</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">テーマ</div>
+        <div class="compare-card-value">10,000〜20,000円（初期）</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">年間合計</div>
+        <div class="compare-card-value">約18,000〜35,000円</div>
+      </div>
+    </div>
+  </div>
+  <div class="compare-cards-arrow">→</div>
+  <div class="compare-card compare-card--highlight">
+    <div class="compare-card-header">このブログの構成</div>
+    <div class="compare-card-body">
+      <div class="compare-card-row">
+        <div class="compare-card-label">サーバー</div>
+        <div class="compare-card-value">0円（Cloudflare Pages）</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">ドメイン</div>
+        <div class="compare-card-value">年間約1,550円</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">テーマ</div>
+        <div class="compare-card-value">0円（Claude Codeで生成）</div>
+      </div>
+      <div class="compare-card-row">
+        <div class="compare-card-label">年間合計</div>
+        <div class="compare-card-value">約1,550円</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+## 正直な話：タダじゃないコストもある
+
+ここまで読むと「すごく安い！」と思うかもしれませんが、正直に言うと**ブログの運用コスト以外にかかっているお金**があります。
+
+**Claude Codeの月額**です。僕はMax Planを使っていて、月額$200（約30,000円）かかっています。
+
+ただし、これは「ブログの運用コスト」ではなく「制作ツール」としての出費です。Claude Codeはブログだけでなく、仕事の資料作成やデータ整理にも使っています。ブログのためだけに契約しているわけではありません。
+
+<div class="info-highlight-box">
+
+**補足**: Claude Codeには月額$17のProプランもあります。ブログ制作だけなら、Proプランでも十分です。その場合、ブログに使う分のClaude Code費用は月額数百円程度の計算になります。
+
+</div>
+
+もうひとつ正直に言うと、**学習コストもゼロではない**です。
+
+- ターミナルの基本操作に慣れるまで、最初の1〜2日は戸惑った
+- WordPressなら管理画面でポチポチできることを、Claude Codeに言葉で伝える必要がある
+- 「git push」の概念を理解するのに少し時間がかかった
+
+でも一度仕組みを作ってしまえば、あとはドメイン代だけ。この「最初だけ少しがんばって、あとはほぼ無料」という構造が、僕にとっては魅力的でした。
+
+## 実際のパフォーマンスはどうなのか
+
+「安かろう悪かろう」なんじゃないか。そう思う人もいると思います。
+
+でも実際のパフォーマンスは、WordPressの時より明らかに良いです。Lighthouse（Googleのサイト品質チェックツール）のスコアがこちら。
+
+<div class="merit-cards merit-cards-3col">
+  <div class="merit-card">
+    <div class="merit-card-label">Performance</div>
+    <div class="merit-card-amount">100</div>
+    <p class="merit-card-note">表示速度</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">Accessibility</div>
+    <div class="merit-card-amount">100</div>
+    <p class="merit-card-note">アクセシビリティ</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">SEO</div>
+    <div class="merit-card-amount">100</div>
+    <p class="merit-card-note">検索エンジン最適化</p>
+  </div>
+</div>
+
+WordPressの時は、キャッシュプラグインを入れたり画像を圧縮したりしてもPerformanceが70〜80台でした。それが何もしなくても100点。テーマやプラグインがない分、余計なものが読み込まれないからです。
+
+体感としても違いは明らかで、ページを開いた瞬間にコンテンツが表示されます。「読み込み中...」の白い画面がほぼない。これは読者にとっても大きな差だと思います。
+
+## AIに聞いてもわからなかったこと
+
+Cloudflare Pagesの設定手順やAstroの使い方は、AIに聞けば教えてくれます。でも、以下の判断はAIに聞いても答えが出ませんでした。
+
+<div class="highlight-box">
+
+**1. .devと.comのどちらがいいか？**
+
+AIに聞くと「あなたの目的によります」「どちらにもメリットがあります」という回答が返ってくる。テック系ブログだから.devのほうがブランドに合う、という判断は自分でしました。
+
+**2. Cloudflare Pagesの無料枠はいつまで続くのか？**
+
+AIは「現時点では無料です」としか言えない。自分でCloudflareの決算資料やブログを読んで、「無料枠を廃止するインセンティブはないだろう」と判断しました。Cloudflareのビジネスモデルは、無料ユーザーから有料ユーザーへのアップセル。無料枠がなくなったら新規ユーザーが来なくなるので、廃止の可能性は低い。
+
+**3. WordPressからいつ移行すべきか？**
+
+AIは両方のメリット・デメリットをきれいに並べてくれるけど、「今やれ」とは言わない。「記事がまだ少ない今のうちに移行したほうが、移行コストが低い」と判断したのは自分です。
+
+</div>
+
+AIは選択肢を整理してくれる。でも「どれを選ぶか」の最終判断は、自分の状況を知っている自分にしかできません。
+
+## 2サイト運営してわかったこと
+
+僕はこのAIブログのほかに、サウナブログ「[サウナと暮らす。](https://sauna-to-kurasu.com/)」も運営しています。どちらもAstro + Cloudflare Pagesの同じ構成です。
+
+2サイト目を作るとき驚いたのは、**追加コストがドメイン代だけ**だったこと。Cloudflare Pagesはプロジェクト数が無制限なので、何サイト作っても無料枠のまま。
+
+<div class="info-highlight-box">
+
+**2サイトの合計コスト**: 年間約3,100円（ドメイン代×2）。WordPressで2サイト運営すると年間4〜7万円。差額は年間37,000〜67,000円です。
+
+</div>
+
+さらに、1サイト目で作ったAstroのテンプレートやコンポーネントをそのまま流用できるので、2サイト目の立ち上げは初回よりずっと速かった。副業で複数ブログを運営したい人にとって、このコスト構造は大きな武器になると思います。
+
+## この構成が向いている人・向いていない人
+
+<div class="decision-cards">
+  <div class="decision-card">
+    <div class="decision-card-title">向いている人</div>
+    <p>ブログのコストを最小限にしたい人。表示速度を重視する人。新しいツールを試すのが好きな人。記事を書くことに集中したい人。将来的に複数サイトを運営したい人。</p>
+  </div>
+  <div class="decision-card decision-card--risk">
+    <div class="decision-card-title">向いていない人</div>
+    <p>すぐにプラグインで機能追加したい人。ターミナルに一切触りたくない人。すでにWordPressで十分な収益が出ている人。管理画面がないと不安な人。</p>
+  </div>
+</div>
+
+ひとつ補足すると、「ターミナルに触りたくない」は最初だけの壁です。Claude Codeを使えば、ターミナルに直接コマンドを打つことはほとんどありません。日本語で指示するだけで、Claude Codeがコマンドを実行してくれます。
+
+## 始め方の全体像
+
+興味が出てきた方のために、全体の流れだけ紹介します。
+
+<div class="process-timeline">
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">1</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">Claude Codeをインストールする</div>
+      <p class="process-timeline-desc">Node.jsを入れて、ターミナルでコマンドを1つ打つだけ。詳しくは下の記事で。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">2</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">「ブログを作って」と伝える</div>
+      <p class="process-timeline-desc">Claude Codeに日本語で話しかけるだけで、Astroプロジェクトが生成される。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">3</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">Cloudflare Pagesにデプロイする</div>
+      <p class="process-timeline-desc">GitHubにコードをプッシュすると、Cloudflare Pagesが自動でビルド・公開してくれる。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">4</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">ドメインを取得して設定する</div>
+      <p class="process-timeline-desc">Cloudflare Registrarで.devドメインを取得。DNS設定もCloudflare内で完結。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">5</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">記事を書いて公開する</div>
+      <p class="process-timeline-desc">あとはMDXファイルに記事を書いて、git pushするだけ。年間1,550円の運用が始まる。</p>
+    </div>
+  </div>
+</div>
+
+各ステップの詳しい手順は、こちらの記事で解説しています。
+
+<InternalLinkCard slug="setup-claude-code-getting-started" headerText="Claude Codeの始め方" />
+
+## まとめ
+
+<div class="summary-box">
+
+**この記事のポイント**
+
+- このブログの年間運用コストは**約1,550円**（.devドメイン代のみ）
+- Cloudflare Pagesの無料枠で、帯域無制限のホスティングが0円
+- WordPressと比べて年間16,000〜33,000円の節約になる
+- Lighthouseスコアは全項目100点。安いだけでなく速い
+- 2サイト運営しても年間約3,100円。スケールするほどコストメリットが大きい
+- WordPressから移行するなら、記事が少ないうちがベスト
+
+</div>
+
+高いお金を払わなくてもブログは始められます。大事なのは「どこにお金をかけるか」より、**書き続けること**のほうだと僕は思っています。
+
+<InternalLinkCard slug="ops-mobile-dev-environment" headerText="スマホからブログを更新する方法" />
