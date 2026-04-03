@@ -1,0 +1,250 @@
+---
+title: "Tailwind CSSをClaude Codeに任せたらそれっぽいサイトができた"
+description: "CSSの知識ゼロの非エンジニアが、Claude CodeにTailwind CSSを丸投げしてブログを構築。177種類のクラスが生成された実例・ハマりポイント・AIの限界を具体的に記録します。"
+pubDate: 2026-04-03
+category: "つくる"
+---
+
+import InternalLinkCard from '../../components/InternalLinkCard.astro';
+import AiChat from '../../components/AiChat.astro';
+
+## 結論：CSSを1行も書かずに、このブログのデザインができた
+
+最初に事実だけ書きます。
+
+このブログのデザインは、すべてClaude Codeが生成しました。僕が書いたCSSは0行。「Tailwind CSS」という仕組みの存在すら、サイトが出来上がってから知りました。
+
+<div class="merit-cards merit-cards-3col">
+  <div class="merit-card">
+    <div class="merit-card-label">自分で書いたCSS</div>
+    <div class="merit-card-amount">0行</div>
+    <p class="merit-card-note">すべてClaude Codeが生成</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">使われたクラス</div>
+    <div class="merit-card-amount">177種類</div>
+    <p class="merit-card-note">Tailwind CSSのユーティリティ</p>
+  </div>
+  <div class="merit-card">
+    <div class="merit-card-label">デザイン完成</div>
+    <div class="merit-card-amount">初日</div>
+    <p class="merit-card-note">初期構築の当日に基本形が完成</p>
+  </div>
+</div>
+
+ただし「それっぽい」と「プロのデザイン」には差があります。その差がどのくらいなのか、何が良くて何が足りなかったのかを、このブログの実例で具体的に書いていきます。
+
+<div class="toc-section">
+  <strong>この記事の内容</strong>
+  <ol>
+    <li><a href="#そもそもtailwind-cssって何">そもそもTailwind CSSって何？</a></li>
+    <li><a href="#ヘッダー作ってから始まった">「ヘッダー作って」から始まった</a></li>
+    <li><a href="#このブログで実際に使われているtailwindパターン">このブログで実際に使われているTailwindパターン</a></li>
+    <li><a href="#tailwind-v4だからできたこと">Tailwind v4だからできたこと</a></li>
+    <li><a href="#僕がハマった3つのポイント">僕がハマった3つのポイント</a></li>
+    <li><a href="#aiに聞いてもわからなかったこと">AIに聞いてもわからなかったこと</a></li>
+    <li><a href="#自分でtailwind-cssを学んでいたら">自分でTailwind CSSを学んでいたら</a></li>
+    <li><a href="#非エンジニアがtailwind--claude-codeで気をつけること">非エンジニアが気をつけること</a></li>
+  </ol>
+</div>
+
+## そもそもTailwind CSSって何？
+
+Webサイトの見た目（色、大きさ、配置など）を決める仕組みです。
+
+従来のCSSは、別ファイルに「この要素の色は青、幅は500px」と長々書く必要がありました。Tailwind CSSは、HTMLの中に `text-blue-500` や `w-full` のような短い命令（クラス）を直接書くスタイルです。
+
+正直、僕はこの仕組みを理解していません。理解していなくても、Claude Codeが適切なクラスを選んで書いてくれるので、サイトは問題なく動いています。
+
+## 「ヘッダー作って」から始まった
+
+このブログの最初のデザイン作業は、ヘッダーでした。Claude Codeに出した指示はこんな感じです。
+
+<AiChat messages={[
+  { role: 'human', text: 'ダークカラーのヘッダーを作って。上部に固定されるやつ。ロゴとナビゲーションリンクがあって、スマホではハンバーガーメニューになるようにして。' },
+  { role: 'ai', text: 'ヘッダーを作成しました。sticky top-0でスクロール時も上部に固定、PCではナビリンクを横並び表示、768px以下のスマホではハンバーガーメニューに切り替わります。メニューは右からスライドインするアニメーション付きです。' }
+]} />
+
+出てきたコードを見ると、こんなクラスが並んでいました。
+
+```
+sticky top-0 z-50 shadow-lg
+```
+
+これが「ヘッダーを上部に固定して、影をつける」という意味だそうです。
+
+```
+hidden md:flex items-center gap-6
+```
+
+これは「スマホでは隠して、PCでは横並びで表示する」。
+
+```
+transform translate-x-full transition-transform duration-300
+```
+
+これがモバイルメニューのスライドアニメーション。画面外から300ミリ秒かけてスライドインする動きです。
+
+僕には完全に暗号でした。でもブラウザで確認したら、ちゃんとスマホでもPCでも動いていました。
+
+## このブログで実際に使われているTailwindパターン
+
+暗号のようなクラスが、具体的に何をしているのか。このブログの実例で4つ紹介します。
+
+<div class="highlight-box">
+
+**1. 画面サイズで文字の大きさが変わる**
+
+```
+text-3xl md:text-5xl font-extrabold
+```
+
+トップページの「コードを書かない。AIと暮らす。」の見出し。スマホでは `text-3xl`（少し大きめ）、PCでは `text-5xl`（かなり大きい）に自動で切り替わります。`md:` というのが「PC幅以上なら」という条件です。
+
+</div>
+
+<div class="highlight-box">
+
+**2. カードにマウスを乗せると浮き上がる**
+
+```
+hover:-translate-y-0.5 hover:shadow-md transition-all
+group-hover:scale-[1.03]
+```
+
+記事一覧のカードです。マウスを乗せると、カードが0.5px上に浮き上がり、影が濃くなり、サムネイル画像が1.03倍に拡大します。こういう「触りたくなる」インタラクションをClaude Codeが自動で付けてくれました。
+
+</div>
+
+<div class="highlight-box">
+
+**3. スマホ2列、PC4列の統計グリッド**
+
+```
+grid grid-cols-2 md:grid-cols-4 gap-4
+```
+
+トップページの「0行 / ¥1,550 / 100点 / 0円」の統計エリア。スマホでは2列×2行、PCでは4列×1行に自動で切り替わります。1行のコードでレスポンシブ対応が完了しています。
+
+</div>
+
+<div class="highlight-box">
+
+**4. モバイルメニューのスライドイン**
+
+```
+translate-x-full → translate-x-0
+```
+
+ハンバーガーメニューをタップすると、右側から半透明の黒い背景と一緒にメニューがスライドしてきます。CSSアニメーションをTailwindのクラスだけで実現していて、JavaScriptでやっているのは表示/非表示の切り替えだけです。
+
+</div>
+
+## Tailwind v4だからできたこと
+
+このブログはTailwind CSS v4という最新バージョンを使っています。v4では設定ファイル（`tailwind.config.js`）が不要になり、CSSファイルの中に直接デザインの基本設定を書けるようになりました。
+
+```css
+@theme {
+  --color-accent: #0E7490;
+  --color-dark: #0F172A;
+  --color-cyan: #22D3EE;
+  --font-sans: "Noto Sans JP", system-ui, sans-serif;
+}
+```
+
+サイト全体のカラーやフォントがこの数行で定義されています。
+
+僕が最初にネットで調べたTailwindの情報はv3のもので、「設定ファイルを作って…」と書いてあって混乱しました。Claude Codeに聞いたら「v4では@themeブロックを使います」と最新の方法を教えてくれて、設定ファイルなしで進められました。
+
+## 僕がハマった3つのポイント
+
+全部うまくいったわけではありません。
+
+<div class="process-timeline">
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">1</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">記事本文にTailwindを使おうとして破綻した</div>
+      <p class="process-timeline-desc">最初は記事本文のスタイルもTailwindで指定しようとしました。でもMDX（記事を書くファイル形式）の中にクラスを大量に書くと、記事の内容が読めなくなりました。結局、記事本文は従来のCSS（article-body-shared.css）で管理するハイブリッド構成に落ち着きました。<strong>Tailwindだけでサイト全体をカバーするのは現実的ではなかった</strong>、というのが正直な結論です。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">2</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">arbitrary values（自由な数値指定）の乱用</div>
+      <p class="process-timeline-desc">Tailwindには <code>text-[15px]</code> や <code>z-[60]</code> のように、標準にない値を自由に指定できる機能があります。便利なのですが、Claude Codeに何度も指示するうちに <code>text-[13px]</code>、<code>text-[15px]</code>、<code>text-sm</code> と微妙に違うフォントサイズが混在してしまいました。「統一して」と指示し直す必要がありました。</p>
+    </div>
+  </div>
+  <div class="process-timeline-item">
+    <div class="process-timeline-marker">3</div>
+    <div class="process-timeline-content">
+      <div class="process-timeline-title">Tailwindクラスとインラインstyleが混在した</div>
+      <p class="process-timeline-desc">ヘッダーのコードを見ると、<code>class="sticky top-0 z-50"</code> の横に <code>style="background-color: #0F172A;"</code> と書いてあります。レイアウトはTailwindクラス、色はインラインスタイルという混在状態。Claude Codeは場面によって使い分けるのですが、人間からすると「どっちかに統一してほしい」と感じました。</p>
+    </div>
+  </div>
+</div>
+
+## AIに聞いてもわからなかったこと
+
+Claude Codeは「指示通りに見た目を作る」のは得意です。でも、以下は人間が判断する領域として残りました。
+
+**「それっぽい」と「良い」の違い。** Claude Codeが作るデザインは70点くらいだと感じています。レスポンシブ対応もアニメーションも付いていて、素人目には十分きれいです。でもプロのデザイナーが見たら、余白のバランスやタイポグラフィのリズムに改善点があるはず。この「70点を見て満足するか、90点を目指すか」の判断はAIにはできません。
+
+**ページ間のデザイン一貫性。** Claude Codeは1ページ単位では整ったデザインを作ってくれます。でも、トップページと記事ページでフォントサイズのルールが微妙にずれていたり、余白の取り方が違ったりすることがありました。「全ページを俯瞰して統一感をチェックする」のは、結局人間の仕事でした。
+
+**「この色でいいのか」の判断。** このブログのアクセントカラー `#0E7490`（ティール系の青緑）は僕が選びました。Claude Codeに「テック系のブログに合う色を提案して」と聞けば候補は出してくれます。でも「この色が好きか」「自分のブログに合っているか」は、AIに決めてもらう話ではありませんでした。
+
+## 自分でTailwind CSSを学んでいたら
+
+<div class="compare-cards">
+  <div class="compare-card compare-card-left">
+    <div class="compare-card-header">Claude Codeに任せた場合</div>
+    <ul>
+      <li>初日でサイト全体のデザインが完成</li>
+      <li>CSSの知識はゼロでOK</li>
+      <li>レスポンシブ対応もアニメーションも自動</li>
+      <li>ただし一貫性の調整は人間が必要</li>
+      <li>仕上がりは70点（素人目には十分）</li>
+    </ul>
+  </div>
+  <div class="compare-card compare-card-right">
+    <div class="compare-card-header">自分で学んだ場合</div>
+    <ul>
+      <li>公式ドキュメントを読むだけで数十時間</li>
+      <li>レスポンシブ＋アニメーションまで含めると数ヶ月</li>
+      <li>デザインの意図を完全にコントロールできる</li>
+      <li>仕上がりは学習量次第で90点以上も可能</li>
+      <li>ただし本業＋子育ての合間に学ぶ時間がない</li>
+    </ul>
+  </div>
+</div>
+
+僕がClaude Codeに任せた理由はシンプルです。共働きで子どもが2人いて、CSSを学ぶ時間がない。70点のデザインが初日で出来上がるのと、90点のデザインに3ヶ月かかるのなら、70点を取ります。
+
+そして70点からの改善は、またClaude Codeに頼めばいい。「ここの余白をもう少し広げて」「フォントサイズを全ページで統一して」と日本語で伝えるだけで、少しずつ80点、85点に近づいていける。これが非エンジニアにとっての現実的な戦略だと思っています。
+
+## 非エンジニアがTailwind × Claude Codeで気をつけること
+
+<div class="summary-box">
+
+- **デザインの方向性は自分で決める**: ダーク系かライト系か、メインの色は何色か。ここだけは自分の好みで選ぶ必要があります
+- **指示は具体的に**: 「かっこいい感じで」ではなく「参考サイトのURLはこれ」「メインカラーは#0E7490」と伝えると精度が上がります
+- **先にデザインシステムを定義させる**: 最初にカラーパレットとフォントを決めてCSSに書き込んでもらう。これが全ページの統一感の土台になります
+- **最後に全ページ並べて見比べる**: AIはページ単位では整えますが、ページ間の一貫性チェックは人間がやる工程として残ります
+
+</div>
+
+## まとめ
+
+CSSの知識ゼロでも、Claude CodeとTailwind CSSの組み合わせで「それっぽいサイト」は作れます。177種類のTailwindクラスが自動生成され、レスポンシブ対応もアニメーションも付いてきました。
+
+ただし万能ではありません。記事本文には従来のCSSを併用する必要があったし、ページ間の統一感やデザインの好みは人間が判断する領域です。
+
+**「70点を初日で作り、あとからAIと一緒に改善していく」**。これが非エンジニアにとってのTailwind CSS × Claude Codeの現実的な使い方です。
+
+<InternalLinkCard slug="story-zero-code-blog" headerText="このブログを作った経緯" />
+
+<InternalLinkCard slug="claude-prompt-tips-from-failures" headerText="プロンプトの書き方で失敗した話" />
+
+<InternalLinkCard slug="story-cursor-to-claude-code" headerText="Claude Codeに乗り換えた話" />
