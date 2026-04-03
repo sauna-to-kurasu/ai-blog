@@ -117,7 +117,7 @@ AIはプログラミング・デザイン・文章の整形・戦略立案まで
 | 4 | 体験記 | 月額0円でブログを運用して1ヶ月。Astro + Cloudflareの実態 | Astro ブログ 運用, Cloudflare 無料 |
 | 5 | Claude Code | CLAUDE.mdの書き方完全ガイド | CLAUDE.md 書き方 |
 | 6 | 運用 | ~~ブログの運用コストを年間1,550円にした方法~~ ✅ 公開済 | WordPress 代替, ブログ コスト |
-| 7 | 体験記 | 3つのAIコードツールを試した非エンジニアの結論。Claude Code vs Cursor vs Windsurf | Claude Code 比較, AI コーディング |
+| 7 | 体験記 | CursorからClaude Codeに乗り換えた非エンジニアの話。2ヶ月使い比べた結論 ✅ 公開済 | Claude Code 比較, AI コーディング |
 | 8 | つくる | Tailwind CSSをClaude Codeに任せたらそれっぽいサイトができた | Tailwind Claude Code |
 | 9 | Claude Code | AIに"全部お任せ"で失敗した話。プロンプトの書き方を変えた7つの瞬間 | Claude Code コツ, プロンプト 書き方 |
 | 10 | 体験記 | 非エンジニアがClaude Codeでハマった失敗10選 | Claude Code エラー |
