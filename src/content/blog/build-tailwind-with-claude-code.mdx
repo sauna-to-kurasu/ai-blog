@@ -152,7 +152,7 @@ hidden md:flex items-center gap-6
 
 正直、僕にはこれが暗号にしか見えません。でも、暗号を理解する必要はありませんでした。Claude Codeがこのコードを自動生成してくれるので、僕は「結果が良いかどうか」をブラウザで確認するだけです。
 
-このブログはTailwind CSS v4（最新バージョン）を使っています。v4では設定ファイルが不要になり、こんな数行でサイト全体の色やフォントが定義されています：
+このブログはTailwind CSS v4（最新バージョン）を使っています。v4では設定ファイル（プログラムの動作を決めるファイル）が不要になり、こんな数行でサイト全体の色やフォントが定義されています：
 
 ```css
 @theme {
@@ -174,7 +174,7 @@ hidden md:flex items-center gap-6
     <div class="process-timeline-marker">1</div>
     <div class="process-timeline-content">
       <div class="process-timeline-title">記事の本文スタイルは別管理が必要だった</div>
-      <p class="process-timeline-desc">最初は記事本文のデザインもAIに任せきりでしたが、記事ごとにバラバラになってしまいました。結局、記事本文は専用のCSSファイルで管理するハイブリッド構成に。AIに全部任せても「記事の見た目は統一したい」という判断は人間がする必要がありました。</p>
+      <p class="process-timeline-desc">最初は記事本文のデザインもAIに任せきりでしたが、記事ごとにバラバラになってしまいました。結局、記事本文は専用のCSSファイルで管理するハイブリッド構成（＝Tailwindと従来のCSSを使い分ける方式）に。AIに全部任せても「記事の見た目は統一したい」という判断は人間がする必要がありました。</p>
     </div>
   </div>
   <div class="process-timeline-item">
