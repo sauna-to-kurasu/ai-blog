@@ -1,44 +1,84 @@
 # 引継書
 
-> 更新日: 2026-04-05
+> 更新日: 2026-04-06
 
-## 全10記事 総チェック — 全Tier完了
+## 全記事事実確認 & ブラッシュアップ（進行中）
 
-### PR#23（Tier 1）— マージ済み
-### PR#24（Tier 2-3）— マージ待ち（`fix/article-review-tier2`）
+### 背景
+- ブログ分析の結果、SEO単体では月間3,000PV達成は非現実的。X（SNS）活用が必要
+- しかしSNSで拡散する前に、記事の事実誤認を修正する必要がある
+- 3エージェント（SEO・SNS・収益化）による戦略ディスカッション済み → 記事修正後にSTRATEGY.md更新予定
 
----
+### 戦略ディスカッション結論（3エージェント合意）
+- KPIを「月間3,000PV」→「月間1,000PV + リスト50人」に修正すべき
+- X（Twitter）を最優先の集客チャネルに
+- 既存11記事のKW最適化 → 新記事より先
+- 商品化はリスト100人超えてから
 
-### 完了済み: 横断施策 + Tier 1（PR#23）
+### 完了済み: セッション1 — トップページ事実確認
 
-**横断施策:**
-- CLAUDE.md行数を「111行」「112行」→「150行超」に統一
-- Claude Pro金額を「$17」→ 正確な表記に統一
-- 用語集ページ `setup-ai-dev-glossary.mdx` を新規作成（19用語収録）
+**修正3箇所:**
+1. `すべてAIに口頭指示` → `すべてAIに音声指示`（ユーザーは全て音声入力で操作）
+2. `.devドメイン代のみ` → `.devドメイン代のみ ※別途AI開発ツール代`（Claude Code月額$100が別途かかる）
+3. `100点 / Lighthouseスコア / 静的生成×CDN` → `100点 / Lighthouse SEO / 検索エンジン最適化スコア`（Performance実測62点。SEOは実測100点）
 
-**Tier 1 記事修正:**
-- No.0 `story-zero-code-blog.mdx`: WordPress比較表の専門用語平易化、フレームワーク等の補足説明
-- No.1 `setup-claude-code-getting-started.mdx`: npm/Node.js/localhost/sudoにinfo-highlight-box解説追加
-- No.3 `ops-annual-cost-13-dollars.mdx`: 帯域幅/ビルド回数/SSL証明書/git pushに括弧書き補足
+**発見した事実:**
+- ユーザーはClaude Codeへの指示を全て音声入力で行っている（「話しかけるだけ」は比喩ではなく事実）
+- AtCoderで茶色下位の経験あり。ただし実務開発・環境構築経験はゼロ →「プログラミング経験ゼロ」はOK
+- Lighthouseスコア100点はAIの捏造（再犯）。実測: Performance 62, Accessibility 90, Best Practices 100, SEO 100
 
-### 完了済み: Tier 2（PR#24）
+**他記事への波及（後続セッションで対応必須）:**
+- `ops-annual-cost-13-dollars.mdx`: Lighthouseスコア全項目100点のmerit-card → 実測値に修正
+- `setup-ai-dev-glossary.mdx`: 「Lighthouseスコア100点を狙えます」→ 表現修正
 
-- No.2 `ops-mobile-dev-environment.mdx`: VPN/SSH のinfo-highlight-box追加、PAT・スコープ・MCP括弧書き補足、`--host 0.0.0.0`のinfo-highlight-box追加（計6箇所）
-- No.5 `claude-claude-md-guide.mdx`: Tech Stackセクション前にballoon-comment初導入（「読み飛ばしてOK」）、「ルートフォルダ」→「一番上の階層（ルートフォルダ）」に平易化
-- No.7 `story-cursor-to-claude-code.mdx`: GUI・AIモデルの括弧書き補足
+### 完了済み: セッション2 — 記事No.1 事実確認
 
-### 完了済み: Tier 3（PR#24）
+**修正6箇所:**
+1. 「3〜4年前」→「4〜5年前」（読書ブログは2021-2022年頃）
+2. 作業時間帯: 「朝5時に起きて」→「朝5時過ぎに起きて」、「夜21時から」→「夜21時半頃から」
+3. Cursorの記述: 「一番精度の高いClaude（Sonnet）」→「精度の高いClaudeモデル」、「1ヶ月間使えなくなる」→「2〜3日で上限に達してしまう」
+4. ConoHa WINGのコスト: 「月1,000円以上のサーバー代に加えて、ConoHa WINGに年間1万円以上」→「ConoHa WINGに年間約12,000円（サーバー+ドメイン込み）」
+5. 「このブログで発信していくこと」リスト: 現在の戦略に合わせて5項目を全面再構成
+6. シミュレーターの表現を具体化 + Pro/Max使い分けの説明追加 + 「道場」表現を削除
 
-- No.4 `story-free-blog-one-month.mdx`: 「デプロイ回数」→「サイト更新回数」、git push括弧書き補足、「約3日」修正
-- No.8 `build-tailwind-with-claude-code.mdx`: 「設定ファイル」「ハイブリッド構成」の括弧書き補足
-- No.6 `claude-prompt-tips-from-failures.mdx`: トークン説明のinfo-highlight-box追加、Opus 4.6→Claude Maxに変更、375px→「スマホ（375px）」並記
-- No.9 `story-claude-code-10-mistakes.mdx`: 品質確認のみ。変更不要
+**追加作業:**
+- docs/fact-check-log.md を新規作成（セッション間で事実確認を繰り返さないためのリファレンス）
+- docs/user-voice.md に追記（モバイル体験、$100の価値、事実ドキュメント化の要望等）
+- docs/ai-failures.md に追記（Cursor最高精度モデル誤記、上限期間、ConoHaコスト構造）
 
----
+**ユーザーからのフィードバック:**
+- 事実確認結果をドキュメント化すべき（→ fact-check-log.md で対応）
+- 質問する前に既存docsを確認すること（CLAUDE.md既存ルールの再徹底）
 
-## 現在のプロジェクト状況
+### 未着手: セッション3〜12
 
-- 全10記事の総チェック完了
-- PR#24 マージ待ち
-- balloon-commentの初使用実績あり（claude-claude-md-guide.mdx）
-- ai-failures.md / user-voice.md / blog-seeds.md の記録補完は前々回完了済み
+| セッション | 対象 | slug |
+|-----------|------|------|
+| 3 | 記事No.2 | ops-mobile-dev-environment |
+| 4 | 記事No.3 | setup-claude-code-getting-started |
+| 5 | 記事No.4 | story-free-blog-one-month |
+| 6 | 記事No.5 | claude-claude-md-guide |
+| 7 | 記事No.6 | ops-annual-cost-13-dollars |
+| 8 | 記事No.7 | story-cursor-to-claude-code |
+| 9 | 記事No.8 | build-tailwind-with-claude-code |
+| 10 | 記事No.9 | claude-prompt-tips-from-failures |
+| 11 | 記事No.10 | story-claude-code-10-mistakes |
+| 12 | 用語集 | setup-ai-dev-glossary |
+
+### 各セッションの進め方
+1. **事前確認**: docs/fact-check-log.md で既に確認済みの事実を確認し、同じ質問を繰り返さない
+2. 記事を全文読み、セクションごとにユーザーに事実確認
+3. ユーザーの回答を docs/user-voice.md に記録
+4. AIの事実誤認があれば docs/ai-failures.md に記録
+5. 確認済み事実を docs/fact-check-log.md に追記
+6. 修正反映 → 他記事との整合性チェック
+
+### 全記事完了後
+1. 全記事横断の整合性チェック
+2. STRATEGY.md更新（3エージェントの提言反映）
+3. 戦略実行（X開設、KW最適化等）
+
+### 注意点
+- 1記事1セッションが基本（精度担保のため）
+- トークン余力がある場合のみ次の記事に進む（AIから提案する）
+- Lighthouseスコアの捏造は複数記事に波及しているので、各セッションで該当記事を修正する
