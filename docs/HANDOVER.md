@@ -95,11 +95,31 @@
 **他記事への波及（後続セッションで確認）:**
 - Claude Proの料金が「$20」になっている記事: ops-annual-cost-13-dollars.mdx, story-cursor-to-claude-code.mdx, story-zero-code-blog.mdx
 
-### 未着手: セッション5〜12
+### 完了済み: セッション5 — 記事No.4 事実確認
+
+**修正8箇所:**
+1. 「iPhoneから」→「スマホ（Galaxy Z Fold7）から」
+2. 「通勤電車の中でも」→「会社の駐車場や昼休みの散歩中にも」（車通勤）
+3. WordPress公開フロー: 7ステップ→10ステップに拡充（XMind→Word→PowerPoint→WordPress…の実態）
+4. 画像管理セクション: 手動前提→Claude Code自動化の実態に書き直し（撮影指示→ファイル名→WebP→透かし→差込み）
+5. 「メンテナンス3割」「依存パッケージ5分」→ 実態に書き直し（ユーザーは認識すらしていない。真のボトルネックは構成思考・執筆・図解）
+6. 「朝5時に起きて」→「朝5時過ぎに起きて」
+7. GA4データを最新値に更新（PV9→PV65、5日間分）。GSCも3クリック/20表示に更新
+8. merit-card/まとめを最新データに更新（6記事→11記事、24デプロイ→73デプロイ）
+
+**追加作業:**
+- docs/fact-check-log.md にセッション5の確認事実＋GA4/GSC実測データを追記
+- docs/ai-failures.md に「iPhone」「通勤電車」「メンテナンス3割」等の事実誤認を記録
+- docs/user-voice.md にWordPressフロー・画像自動化・ボトルネック変化の声を記録
+
+**特記事項:**
+- この記事はデータを定期更新する方針（ユーザー指示）。1ヶ月経過時点で再度データ更新が必要
+- GA4プロパティIDは `properties/531064800`（「AIと暮らす。」）
+
+### 未着手: セッション6〜12
 
 | セッション | 対象 | slug |
 |-----------|------|------|
-| 5 | 記事No.4 | story-free-blog-one-month |
 | 6 | 記事No.5 | claude-claude-md-guide |
 | 7 | 記事No.6 | ops-annual-cost-13-dollars |
 | 8 | 記事No.7 | story-cursor-to-claude-code |
