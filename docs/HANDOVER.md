@@ -50,11 +50,33 @@
 - 事実確認結果をドキュメント化すべき（→ fact-check-log.md で対応）
 - 質問する前に既存docsを確認すること（CLAUDE.md既存ルールの再徹底）
 
-### 未着手: セッション3〜12
+### 完了済み: セッション3 — 記事No.2 事実確認
+
+**修正7箇所:**
+1. 構築時間「約30分」→「約1時間」（merit-card + 本文 + まとめの3箇所）
+2. Claude Codeプラン「Proプラン月額¥3,400 / Google Play経由」→「Max Plan 月額$100」
+3. Tailscale接続確認: ターミナルコマンド→アプリ画面でIP確認に修正
+4. Claude Code認証手順: 「コードを入力」→「URLをコピー→ブラウザに貼り付け→承認ボタン」+ API従量課金の注意追記
+5. スリープ対策: macOSバッテリー設定追加 + 最終解決策「MacBook 1-2cm開けっぱなし」追記
+6. リモートコントロール比較: トークン消費問題の補足追加
+7. Tailscale IPの確認方法をアプリ画面ベースに修正
+
+**追加作業:**
+- 個人情報管理の2層構造を導入（PROJECT_CONTEXT.md / PRIVATE_CONTEXT.md / context-management.md）
+- .gitignore に PRIVATE_CONTEXT.md 追加
+- CLAUDE.md に個人情報管理ルール追記
+- docs/fact-check-log.md にセッション3の確認事実を追記
+- docs/ai-failures.md にプラン誤記・認証手順・スリープ対策の記録を追記
+- docs/user-voice.md にスマホ開発の実感・個人情報管理要望を追記
+- docs/blog-seeds.md に個人情報管理ネタを追記（講座候補）
+
+**他記事への波及（後続セッションで確認）:**
+- 他記事でClaude Codeのプラン表記が「Pro」になっている箇所がないか確認
+
+### 未着手: セッション4〜12
 
 | セッション | 対象 | slug |
 |-----------|------|------|
-| 3 | 記事No.2 | ops-mobile-dev-environment |
 | 4 | 記事No.3 | setup-claude-code-getting-started |
 | 5 | 記事No.4 | story-free-blog-one-month |
 | 6 | 記事No.5 | claude-claude-md-guide |
