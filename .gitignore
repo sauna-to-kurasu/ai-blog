@@ -4,3 +4,6 @@ dist/
 .wrangler/
 .DS_Store
 docs/screenshots/
+
+# 個人情報（非公開）
+docs/PRIVATE_CONTEXT.md
