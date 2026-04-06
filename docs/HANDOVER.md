@@ -72,12 +72,33 @@
 
 **他記事への波及（後続セッションで確認）:**
 - 他記事でClaude Codeのプラン表記が「Pro」になっている箇所がないか確認
+- Claude Proの料金「$20」表記の修正（セッション4で発覚。$17が正しい。$20はCursor Pro）
+  - 対象: ops-annual-cost-13-dollars.mdx (セッション7), story-cursor-to-claude-code.mdx (セッション8), story-zero-code-blog.mdx (セッション2で対応漏れ)
 
-### 未着手: セッション4〜12
+### 完了済み: セッション4 — 記事No.3 事実確認
+
+**修正7箇所:**
+1. 所要時間「約30分」→「約1時間」（description・見出し・本文・merit-card・まとめの5箇所）
+2. 「キーボードで叩くのは日本語の言葉だけ」→ 音声入力の事実と整合（入力手段を限定しない表現に）
+3. 料金プラン表・本文「Pro $20/月」→「Pro $17/月」（Claude Pro=$17、Cursor Pro=$20の混同修正）
+4. 「APIの従量課金で$100以上」→「追加クレジットを自分で購入してトータル約$100」（API課金はCursor時代の別件）
+5. 「僕がハマったポイント」セクション全面書き直し→「エラーが出ても怖くない理由」（AIの体験捏造→実体験ベースに）
+6. デスクトップアプリの遷移を正確に: Claudeチャットアプリ→Claude Codeデスクトップ→ターミナル（理由: Agent Teams・Auto Mode）
+7. 「初めてサイトが映った感動」→ サウナブログ構築時の体験であることを明示
+
+**追加作業:**
+- docs/fact-check-log.md にセッション4の確認事実を追記
+- docs/ai-failures.md に2件追記（体験捏造パターン、Claude Pro $17→$20混同）
+- docs/blog-seeds.md に音声入力環境ネタを追記（講座候補）
+- docs/user-voice.md にユーザーの声を追記
+
+**他記事への波及（後続セッションで確認）:**
+- Claude Proの料金が「$20」になっている記事: ops-annual-cost-13-dollars.mdx, story-cursor-to-claude-code.mdx, story-zero-code-blog.mdx
+
+### 未着手: セッション5〜12
 
 | セッション | 対象 | slug |
 |-----------|------|------|
-| 4 | 記事No.3 | setup-claude-code-getting-started |
 | 5 | 記事No.4 | story-free-blog-one-month |
 | 6 | 記事No.5 | claude-claude-md-guide |
 | 7 | 記事No.6 | ops-annual-cost-13-dollars |
