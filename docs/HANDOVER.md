@@ -1,6 +1,6 @@
 # 引継書
 
-> 更新日: 2026-04-06
+> 更新日: 2026-04-07
 
 ## 全記事事実確認 & ブラッシュアップ（進行中）
 
@@ -116,17 +116,58 @@
 - この記事はデータを定期更新する方針（ユーザー指示）。1ヶ月経過時点で再度データ更新が必要
 - GA4プロパティIDは `properties/531064800`（「AIと暮らす。」）
 
-### 未着手: セッション6〜12
+### 完了済み: セッション6 — 記事No.5 事実確認
+
+**修正6箇所:**
+1. merit-cards: サウナブログ「ルールファイル16個」→「ルール・スキル20個」
+2. compare-cards: AIブログのルールファイル「0個」→「1個」（context-management.md追加反映）
+3. Cursor Rulesの経緯: Google Discoverの記事→YouTube検索→Cursor Rulesを知った（経緯追加）
+4. Tech Stackエピソード: 「うちはpnpmを使っているから」→Geminiが提案した技術スタックをClaude Codeに渡した
+5. Development Workflowエピソード: 「勝手にgit操作しないで」→**実態は逆**。最初はAIから提案がなく、ユーザーから依頼していた
+6. パターンB全面書き直し: Agent TeamsでCLAUDE.md改善 → 実態はGoogle DiscoverのQiita記事URLをClaude Codeに直接渡して改善
+
+**追加作業:**
+- docs/fact-check-log.md にセッション6の確認事実を追記
+- docs/ai-failures.md にエピソード3件捏造パターンを記録
+- docs/user-voice.md にルール改善サイクル・Gitとの付き合い方の声を追記
+
+### 完了済み: セッション7 — 記事No.6 事実確認
+
+**修正7箇所:**
+1. Lighthouse merit-cards: P100/A100/SEO100 → SEO100/BP100/P62（**捏造の再犯**）
+2. Lighthouse説明文: 「何もしなくても100点」→「SEOとBest Practicesは満点。Performanceは62点で改善余地あり」
+3. Claude Pro料金: $20 → $17（**再犯**）
+4. WordPress管理: 「半日つぶれる」「メンテ>記事」→ 記事構成・執筆・図解が大半（セッション5の確認事実を反映）
+5. Cloudflare決算資料: 「自分で読んで判断」→**完全な捏造**。実態はAIに「無料で大丈夫か」聞いただけ
+6. ターミナル学習: 「基本操作に1-2日戸惑った」→**捏造**。エイリアス設定後はChatGPTと同じ
+7. まとめ: 「Lighthouseスコアは全項目100点」→「SEO・Best Practicesは満点」
+
+**追加作業:**
+- CLAUDE.md「既存ドキュメントの事前確認」ルール強化: fact-check-log最優先確認を明記
+- メモリに「質問前にdocs全件読み込み必須」を記録
+- docs 3ファイル更新
+
+**ユーザーからのフィードバック（重要）:**
+- セッション7開始時にWordPress管理の手間について再質問してしまった（セッション5で既に確認済み）
+- 「なぜfact-check-logの確認が漏れたのか」と指摘
+- → CLAUDE.md・メモリ両方にルール強化を反映済み
+
+### 未着手: セッション8〜12
 
 | セッション | 対象 | slug |
 |-----------|------|------|
-| 6 | 記事No.5 | claude-claude-md-guide |
-| 7 | 記事No.6 | ops-annual-cost-13-dollars |
 | 8 | 記事No.7 | story-cursor-to-claude-code |
 | 9 | 記事No.8 | build-tailwind-with-claude-code |
 | 10 | 記事No.9 | claude-prompt-tips-from-failures |
 | 11 | 記事No.10 | story-claude-code-10-mistakes |
 | 12 | 用語集 | setup-ai-dev-glossary |
+
+### 次セッション（セッション8）の必須事前確認事項
+- **fact-check-logを全セッション分読む**（特に他記事への波及事項）
+- 記事No.7はCursor → Claude Code移行記事。以下の波及修正が必要:
+  - Claude Pro料金 $20 → $17（既知）
+  - その他、Cursor時代の事実は fact-check-log セッション2 を参照
+  - 「最高精度モデル」表記（Sonnet → Opus）の確認
 
 ### 各セッションの進め方
 1. **事前確認**: docs/fact-check-log.md で既に確認済みの事実を確認し、同じ質問を繰り返さない
